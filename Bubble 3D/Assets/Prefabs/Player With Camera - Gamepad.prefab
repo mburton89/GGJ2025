@@ -232,6 +232,11 @@ PrefabInstance:
       propertyPath: spawnpoint
       value: 
       objectReference: {fileID: 4149076736117758522}
+    - target: {fileID: 1020199078698051823, guid: d11db5dcb99980e45925b7c5558d2e59,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4816752652152704119, guid: d11db5dcb99980e45925b7c5558d2e59,
         type: 3}
       propertyPath: m_Camera
@@ -291,6 +296,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 3rd Person Cube (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282485175473988531, guid: d11db5dcb99980e45925b7c5558d2e59,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6282485175473988531, guid: d11db5dcb99980e45925b7c5558d2e59,
         type: 3}

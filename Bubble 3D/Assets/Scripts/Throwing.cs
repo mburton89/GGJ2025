@@ -10,36 +10,42 @@ public class Throwing : MonoBehaviour
 
 
     [Header("Throw Settings")]
-    public float throwingForce = 20f;
+    public float throwingForce = 30f;
     public Vector3 leftDirection = new Vector3(-1, 1, 0);
     public Vector3 rightDirection = new Vector3(1, 1, 0);
     public float objectLifeTime;
     private bool canThrow = true;
     public int throwDelay;
 
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canThrow)
-        {
-            //left click
-            Debug.Log("im left");
-            StartCoroutine(ThrowWithDelay(leftDirection));
+        //if (Input.GetMouseButtonDown(0) && canThrow)
+        //{
+        //    //left click
+        //    Debug.Log("im left");
+        //    StartCoroutine(ThrowWithDelay(leftDirection));
             
 
-        }
-        else if (Input.GetMouseButtonDown(1) && canThrow)
-        {
-            //right click
-            Debug.Log("im right");
-            StartCoroutine(ThrowWithDelay(rightDirection));
+        //}
+        //else if (Input.GetMouseButtonDown(1) && canThrow)
+        //{
+        //    //right click
+        //    Debug.Log("im right");
+        //    StartCoroutine(ThrowWithDelay(rightDirection));
           
-        }
-
+        //}
     }
 
-  
+    public void ThrowLeft()
+    {
+        StartCoroutine(ThrowWithDelay(leftDirection));
+    }
+
+    public void ThrowRight()
+    {
+        StartCoroutine(ThrowWithDelay(rightDirection));
+    }
 
     IEnumerator ThrowWithDelay(Vector3 direction)
     {
@@ -58,7 +64,11 @@ public class Throwing : MonoBehaviour
         }
 
         rb.velocity = Vector3.zero;
-        rb.AddForce(direction.normalized * throwingForce, ForceMode.Impulse);
+        Vector3 throwDirection = direction.normalized * throwingForce;
+        Vector3 newThrowDirection = new Vector3(throwDirection.x, 0, throwDirection.z);
+
+        rb.AddForce(newThrowDirection, ForceMode.Impulse);
+        //rb.AddTorque(new Vector3(newspaperTorqueX, newspaperTorqueY, newspaperTorqueZ));
         Debug.Log("Normaized");
         Destroy(thrownObject,objectLifeTime);
 
