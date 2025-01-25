@@ -45,7 +45,7 @@ public class Newspaper : MonoBehaviour
         {
             FindObjectOfType<UIManager>().AddScore(directHitScore);
             hasHitTarget = true;
-            PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + throwScore + " points!");
+            PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
             SoundManager.Instance.PlayPunchSound();
             SoundManager.Instance.PlayDirectHitSound();
         }
