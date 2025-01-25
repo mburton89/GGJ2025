@@ -23,6 +23,8 @@ public class ComicText : MonoBehaviour
 
     int timesCalled;
 
+    Transform playerCamera;
+
     public void Init(string newText, Transform spawnPosition)
     {
         GetComponentInParent<Canvas>().sortingOrder = 10;
@@ -59,6 +61,8 @@ public class ComicText : MonoBehaviour
         Destroy(gameObject, 2.2f);
 
         timesCalled++;
+
+        playerCamera = FindObjectOfType<BasicCameraFollow>().transform;
     }
 
     public void Init(string newText, Transform spawnPosition, bool doubleSize)
@@ -66,6 +70,19 @@ public class ComicText : MonoBehaviour
         Init(newText, spawnPosition);
         text.transform.localScale *= 2;
     }
+
+    void Update()
+    {
+        Vector3 directionToPlayer = playerCamera.position - text.transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
+
+        // Add 180 degrees to the Y rotation to flip it
+        float flippedYRotation = lookRotation.eulerAngles.y + 180f;
+
+        // Apply the flipped rotation to the text
+        text.transform.rotation = Quaternion.Euler(0, flippedYRotation, 0);
+    }
+
 
     private IEnumerator FadeCo()
     {

@@ -146,9 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99891a0938ee8df468244c50eaf4d0cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directHitScore: 50
+  directHitScore: 110
   maxScore: 1
   maxHitDistance: 60
   throwScore: 1
   rotationSpeed: 800
   rotateClockwise: 1
+  hitForce: 200

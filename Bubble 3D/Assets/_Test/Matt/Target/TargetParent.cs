@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class TargetParent : MonoBehaviour
 {
-    public GameObject linkedTarget;
-    public GameObject linkedTargetArea;
+    public Target linkedTarget;
+    public Target linkedTargetArea;
     public ParticleSystem linkedParticleSystem;
+    public MeshRenderer cyclinder;
+    public GameObject linkedArrow;
+
+    private void Start()
+    {
+        cyclinder.enabled = false;
+    }
 
     public void DisableTargets()
-    { 
-        
+    {
+        linkedTarget.hasBeenHit = true;
+        linkedTargetArea.hasBeenHit = true;
+        linkedParticleSystem.Stop();
+        linkedArrow.SetActive(false);
     }
 }

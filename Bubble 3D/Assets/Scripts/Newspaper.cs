@@ -7,6 +7,7 @@ public class Newspaper : MonoBehaviour
 {
     public int directHitScore;
     public int maxScore;
+    public int minScore = 25;
     public float maxHitDistance;
 
     private Collider targetCollider; 
@@ -18,7 +19,7 @@ public class Newspaper : MonoBehaviour
     public bool rotateClockwise = true;
 
     bool hasHitTarget;
-    bool hasHitAreaTarget;
+    //bool hasHitAreaTarget;
 
     public float hitForce = 200f;
 
@@ -43,28 +44,40 @@ public class Newspaper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target") && !hasHitTarget)
+        if (collision.gameObject.CompareTag("Target"))
         {
-            FindObjectOfType<UIManager>().AddScore(directHitScore);
-            hasHitTarget = true;
-            PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
-            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
             SoundManager.Instance.PlayPunchSound();
-            SoundManager.Instance.PlayDirectHitSound();
+
+            if (!collision.gameObject.GetComponent<Target>().hasBeenHit)
+            {
+                collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                FindObjectOfType<UIManager>().AddScore(directHitScore);
+                hasHitTarget = true;
+                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
+                collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
+                SoundManager.Instance.PlayDirectHitSound();
+                collision.gameObject.GetComponent<Target>().HandleHit();
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Area Target") && !hasHitAreaTarget)
+        if (other.gameObject.CompareTag("Area Target") && !other.gameObject.GetComponent<Target>().hasBeenHit)
         {
             float hitDistance = Vector3.Distance(other.gameObject.transform.position, transform.position);
             print("Area Target Hit Distance: " + hitDistance);
             throwScore = CalculateScore(hitDistance);
+
+            if (throwScore < minScore)
+            {
+                throwScore = minScore;
+            }
+
             FindObjectOfType<UIManager>().AddScore(throwScore);
-            hasHitAreaTarget = true;
             PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!");
             SoundManager.Instance.PlayScorePointSound();
+            other.gameObject.GetComponent<Target>().HandleHit();
         }
     }
 
