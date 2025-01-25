@@ -30,6 +30,7 @@ public class Newspaper : MonoBehaviour
         maxHitDistance = 5f;
         throwScore = 0;
         //targetCollider = gameObject.CompareTag("Target").gameObject.GetComponent<Collider>();
+        GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
     }
 
     // Update is called once per frame
@@ -47,18 +48,21 @@ public class Newspaper : MonoBehaviour
         if (collision.gameObject.CompareTag("Target"))
         {
             SoundManager.Instance.PlayPunchSound();
+            collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
 
             if (!collision.gameObject.GetComponent<Target>().hasBeenHit)
             {
-                collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 FindObjectOfType<UIManager>().AddScore(directHitScore);
                 hasHitTarget = true;
-                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
-                collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
+                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!\n + 5 seconds");
                 SoundManager.Instance.PlayDirectHitSound();
+                GameTimer.Instance.AddTime(5);
                 collision.gameObject.GetComponent<Target>().HandleHit();
             }
         }
+
+        GetComponent<AudioSource>().Stop();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -75,10 +79,13 @@ public class Newspaper : MonoBehaviour
             }
 
             FindObjectOfType<UIManager>().AddScore(throwScore);
-            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!");
+            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!\n + 5 seconds");
             SoundManager.Instance.PlayScorePointSound();
+            GameTimer.Instance.AddTime(5);
             other.gameObject.GetComponent<Target>().HandleHit();
         }
+
+        GetComponent<AudioSource>().Stop();
     }
 
     int CalculateScore(float hitDistance)
