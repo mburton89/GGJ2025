@@ -15,6 +15,8 @@ public class GameTimer : MonoBehaviour
     private float timeRemaining;
     private bool timerRunning;
 
+    public float timeToAdd = 2f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -81,7 +83,7 @@ public class GameTimer : MonoBehaviour
     /// Increases the time remaining by a specified amount.
     /// </summary>
     /// <param name="timeToAdd">Time to add in seconds.</param>
-    public void AddTime(float timeToAdd)
+    public void AddTime()
     {
         timeRemaining += timeToAdd;
 
