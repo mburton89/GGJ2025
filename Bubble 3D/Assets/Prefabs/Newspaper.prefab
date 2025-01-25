@@ -95,7 +95,7 @@ Rigidbody:
   m_GameObject: {fileID: 6136485121297812539}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1.2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -108,11 +108,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &7524543931386878495
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -146,8 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99891a0938ee8df468244c50eaf4d0cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directHitScore: 50
   maxScore: 1
   maxHitDistance: 60
   throwScore: 1
-  rotationSpeed: 1000
+  rotationSpeed: 800
   rotateClockwise: 1
