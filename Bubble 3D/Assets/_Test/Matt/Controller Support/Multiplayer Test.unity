@@ -1783,6 +1783,7 @@ MonoBehaviour:
   timerText: {fileID: 746048745}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   warningColor: {r: 1, g: 0, b: 0, a: 1}
+  timeToAdd: 2
 --- !u!1 &2086026499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,11 +1937,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Target Container
-      objectReference: {fileID: 0}
-    - target: {fileID: 513783296814181114, guid: 973f1a03aca430642a423a7e85055217,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3712511644149244969, guid: 973f1a03aca430642a423a7e85055217,
         type: 3}

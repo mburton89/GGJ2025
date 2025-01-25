@@ -45,7 +45,9 @@ public class Newspaper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target"))
+        print("collision.gameObject.name: " + collision.gameObject.name + " Tag: " + collision.gameObject.tag);
+
+        if (collision.gameObject.GetComponent<Target>())
         {
             SoundManager.Instance.PlayPunchSound();
             collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -67,7 +69,9 @@ public class Newspaper : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Area Target") && !other.gameObject.GetComponent<Target>().hasBeenHit)
+        print("other.gameObject.name: " + other.gameObject.name + " Tag: " + other.gameObject.tag); 
+
+        if (other.gameObject.GetComponent<Target>() && !other.gameObject.GetComponent<Target>().hasBeenHit)
         {
             float hitDistance = Vector3.Distance(other.gameObject.transform.position, transform.position);
             print("Area Target Hit Distance: " + hitDistance);

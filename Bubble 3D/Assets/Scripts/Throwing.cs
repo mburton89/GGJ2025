@@ -68,9 +68,11 @@ public class Throwing : MonoBehaviour
         Vector3 throwDirection = direction.normalized * throwingForce;
 
         // Calculate throw direction relative to the character's facing direction
-        Vector3 relativeThrowDirection = transform.TransformDirection(new Vector3(throwDirection.x, 0, throwDirection.z));
+        //Vector3 relativeThrowDirection = transform.TransformDirection(new Vector3(throwDirection.x, 0, throwDirection.z));
+        Vector3 relativeThrowDirection = transform.forward * throwingForce;
 
         // Add upward velocity to the throw direction
+        //Vector3 newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
         Vector3 newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
 
         rb.AddForce(newThrowDirection, ForceMode.Impulse);
