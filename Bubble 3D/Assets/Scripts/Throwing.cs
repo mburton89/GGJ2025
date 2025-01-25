@@ -24,17 +24,17 @@ public class Throwing : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && canThrow)
         {
             //left click
-            StartCoroutine(ThrowWithDelay(leftDirection));
             Debug.Log("im left");
+            StartCoroutine(ThrowWithDelay(leftDirection));
+            
 
         }
         else if (Input.GetMouseButtonDown(1) && canThrow)
         {
             //right click
-            StartCoroutine(ThrowWithDelay(rightDirection));
             Debug.Log("im right");
-
-
+            StartCoroutine(ThrowWithDelay(rightDirection));
+          
         }
 
     }
