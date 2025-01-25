@@ -5,8 +5,12 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Newspaper : MonoBehaviour
 {
+    public int directHitScore;
     public int maxScore;
+    public int minScore = 25;
     public float maxHitDistance;
+
+    private Collider targetCollider; 
 
     public int throwScore;
 
@@ -15,13 +19,17 @@ public class Newspaper : MonoBehaviour
     public bool rotateClockwise = true;
 
     bool hasHitTarget;
+    //bool hasHitAreaTarget;
+
+    public float hitForce = 200f;
 
     // Start is called before the first frame update
     void Start()
     {
-        maxScore = 100;
+        maxScore = 75;
         maxHitDistance = 5f;
         throwScore = 0;
+        //targetCollider = gameObject.CompareTag("Target").gameObject.GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -36,13 +44,35 @@ public class Newspaper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target") && !hasHitTarget)
+        if (collision.gameObject.CompareTag("Target") && !collision.gameObject.GetComponent<Target>().hasBeenHit)
         {
-            float hitDistance = Vector3.Distance(collision.GetContact(0).point, collision.transform.position);
-            throwScore = CalculateScore(hitDistance);
-            FindObjectOfType<UIManager>().AddScore(throwScore);
-            GetComponent<Rigidbody>().useGravity = true;
+            FindObjectOfType<UIManager>().AddScore(directHitScore);
             hasHitTarget = true;
+            PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
+            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
+            SoundManager.Instance.PlayPunchSound();
+            SoundManager.Instance.PlayDirectHitSound();
+            collision.gameObject.GetComponent<Target>().HandleHit();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Area Target") && !other.gameObject.GetComponent<Target>().hasBeenHit)
+        {
+            float hitDistance = Vector3.Distance(other.gameObject.transform.position, transform.position);
+            print("Area Target Hit Distance: " + hitDistance);
+            throwScore = CalculateScore(hitDistance);
+
+            if (throwScore < minScore)
+            {
+                throwScore = minScore;
+            }
+
+            FindObjectOfType<UIManager>().AddScore(throwScore);
+            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!");
+            SoundManager.Instance.PlayScorePointSound();
+            other.gameObject.GetComponent<Target>().HandleHit();
         }
     }
 
@@ -50,7 +80,7 @@ public class Newspaper : MonoBehaviour
     {
         if (hitDistance <= maxHitDistance)
         {
-            int calculatedScore = Mathf.RoundToInt((1f - (hitDistance / maxHitDistance)) * maxScore);
+            int calculatedScore = Mathf.RoundToInt((1f - (hitDistance / maxHitDistance)) * maxScore + 25);
             return Mathf.Max(calculatedScore, 0);
         }
         else

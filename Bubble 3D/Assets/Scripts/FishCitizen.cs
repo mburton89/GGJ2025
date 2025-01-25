@@ -21,4 +21,6 @@ public class FishCitizen : MonoBehaviour
             FindObjectOfType<UIManager>().AddScore(100);
         }
     }
+
+
 }
