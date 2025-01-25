@@ -18,10 +18,13 @@ public class ControllerInput : MonoBehaviour
     private bool isGrounded;
     private PlayerInput playerInput;
 
+    Throwing throwing;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
+        throwing = GetComponent<Throwing>();
 
         // Enable input actions
         playerInput.actions.Enable();
@@ -55,6 +58,16 @@ public class ControllerInput : MonoBehaviour
         if (playerInput.actions["Jump"].triggered && isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        if (playerInput.actions["ThrowLeft"].triggered && isGrounded)
+        {
+            throwing.ThrowLeft();
+        }
+
+        if (playerInput.actions["ThrowRight"].triggered && isGrounded)
+        {
+            throwing.ThrowRight();
         }
 
         // Apply gravity
