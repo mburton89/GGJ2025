@@ -66,12 +66,12 @@ public class ControllerInput : MonoBehaviour
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        if (playerInput.actions["ThrowLeft"].triggered && isGrounded)
+        if (playerInput.actions["ThrowLeft"].triggered)
         {
             throwing.ThrowLeft();
         }
 
-        if (playerInput.actions["ThrowRight"].triggered && isGrounded)
+        if (playerInput.actions["ThrowRight"].triggered)
         {
             throwing.ThrowRight();
         }
