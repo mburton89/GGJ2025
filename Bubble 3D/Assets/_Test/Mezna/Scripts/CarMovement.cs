@@ -29,6 +29,14 @@ public class MovementController : MonoBehaviour
     private PlayerInput playerInput;
     private Throwing throwing;
 
+    private InputAction steerAction;
+
+    public float controllerAccelerationSpeed = 10f;
+    public float controllerReverseSpeed = 5f;
+
+    private InputAction controllerAccelerateAction;
+    private InputAction controllerReverseAction;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -38,9 +46,19 @@ public class MovementController : MonoBehaviour
         throwing = GetComponent<Throwing>();
     }
 
+    private void Start()
+    {
+        GetNewInputActions();
+    }
+
     private void Update()
     {
         if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+        if (playerInput.actions["Jump"].triggered)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -55,12 +73,17 @@ public class MovementController : MonoBehaviour
             throwing.ThrowRight();
         }
 
+        if (playerInput.actions["ThrowForward"].triggered)
+        {
+            throwing.ThrowForward();
+        }
+
     }
 
     private void FixedUpdate()
     {
         // Add force to accelerate car; go slower if moving backwards
-        rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
+        //rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
         /*if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
@@ -81,6 +104,8 @@ public class MovementController : MonoBehaviour
         {
             rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z);
         }
+
+        HandleNewInput();
     }
 
     private bool IsGrounded()
@@ -93,5 +118,35 @@ public class MovementController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    void GetNewInputActions()
+    {
+        steerAction = playerInput.actions["Steer"];
+        controllerAccelerateAction = playerInput.actions["Accelerate"];
+        controllerReverseAction = playerInput.actions["Reverse"];
+    }
+
+    void HandleNewInput()
+    {
+        // Read the Vector2 value from the Steer action
+        Vector2 steerInput = steerAction.ReadValue<Vector2>();
+
+        // Extract the horizontal component for steering
+        float horizontalInput = steerInput.x;
+
+        // Apply rotation based on the horizontal input
+        transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+
+        float accelerateInput = controllerAccelerateAction.ReadValue<float>();
+        print("accelerateInput " + accelerateInput);
+        float reverseInput = controllerReverseAction.ReadValue<float>();
+
+        // Calculate forward and backward forces
+        float forwardForce = accelerateInput * controllerAccelerationSpeed;
+        float backwardForce = reverseInput * controllerReverseSpeed;
+
+        // Apply forces to the Rigidbody
+        rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
     }
 }
