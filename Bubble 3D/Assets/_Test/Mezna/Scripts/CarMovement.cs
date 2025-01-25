@@ -8,6 +8,7 @@ using UnityEngine;
 /* stuff 2 do:
  - make car bounce back when running into walls
  - make car more "weighted" like a car (allow x-rotation to tilt forward and stuff)
+ - make car rotate freely instead of accelerating while in the air
 */
 
 public class MovementController : MonoBehaviour
@@ -42,14 +43,15 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         // Add force to accelerate car; go slower if moving backwards
-        if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
+        rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
+        /*if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
         }
         else if (Mathf.Sign(Input.GetAxis("Vertical")) == -1)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed / 2);
-        }
+        }*/
 
         // Rotate car based on horizontal input and current velocity
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
