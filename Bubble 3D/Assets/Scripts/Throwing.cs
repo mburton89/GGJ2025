@@ -17,6 +17,8 @@ public class Throwing : MonoBehaviour
     private bool canThrow = true;
     public int throwDelay;
 
+    public float upwardVelocity;
+
     // Update is called once per frame
     void Update()
     {
@@ -65,7 +67,7 @@ public class Throwing : MonoBehaviour
 
         rb.velocity = Vector3.zero;
         Vector3 throwDirection = direction.normalized * throwingForce;
-        Vector3 newThrowDirection = new Vector3(throwDirection.x, 0, throwDirection.z);
+        Vector3 newThrowDirection = new Vector3(throwDirection.x, upwardVelocity, throwDirection.z);
 
         rb.AddForce(newThrowDirection, ForceMode.Impulse);
         //rb.AddTorque(new Vector3(newspaperTorqueX, newspaperTorqueY, newspaperTorqueZ));
