@@ -17,6 +17,8 @@ public class Throwing : MonoBehaviour
     private bool canThrow = true;
     public int throwDelay;
 
+    public float upwardVelocity;
+
     // Update is called once per frame
     void Update()
     {
@@ -49,23 +51,27 @@ public class Throwing : MonoBehaviour
 
     IEnumerator ThrowWithDelay(Vector3 direction)
     {
-        Debug.Log("ThrowWithDelay");
         canThrow = false;
 
         GameObject thrownObject = Instantiate(newsPaperPrefab, spawnpoint.position, Quaternion.identity);
 
         Rigidbody rb = thrownObject.GetComponent<Rigidbody>();
+
         if (rb == null)
         {
             Debug.LogError("The prefab must have a Rigidbody component!");
             Destroy(thrownObject);
             yield break;
-
         }
 
         rb.velocity = Vector3.zero;
         Vector3 throwDirection = direction.normalized * throwingForce;
-        Vector3 newThrowDirection = new Vector3(throwDirection.x, 0, throwDirection.z);
+
+        // Calculate throw direction relative to the character's facing direction
+        Vector3 relativeThrowDirection = transform.TransformDirection(new Vector3(throwDirection.x, 0, throwDirection.z));
+
+        // Add upward velocity to the throw direction
+        Vector3 newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
 
         rb.AddForce(newThrowDirection, ForceMode.Impulse);
         //rb.AddTorque(new Vector3(newspaperTorqueX, newspaperTorqueY, newspaperTorqueZ));
@@ -74,6 +80,5 @@ public class Throwing : MonoBehaviour
 
         yield return new WaitForSeconds(throwDelay);
         canThrow = true;
-
     }
 }
