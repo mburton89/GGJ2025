@@ -44,15 +44,19 @@ public class Newspaper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target") && !collision.gameObject.GetComponent<Target>().hasBeenHit)
+        if (collision.gameObject.CompareTag("Target"))
         {
-            FindObjectOfType<UIManager>().AddScore(directHitScore);
-            hasHitTarget = true;
-            PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
-            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
             SoundManager.Instance.PlayPunchSound();
-            SoundManager.Instance.PlayDirectHitSound();
-            collision.gameObject.GetComponent<Target>().HandleHit();
+
+            if (!collision.gameObject.GetComponent<Target>().hasBeenHit)
+            {
+                FindObjectOfType<UIManager>().AddScore(directHitScore);
+                hasHitTarget = true;
+                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
+                collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
+                SoundManager.Instance.PlayDirectHitSound();
+                collision.gameObject.GetComponent<Target>().HandleHit();
+            }
         }
     }
 
