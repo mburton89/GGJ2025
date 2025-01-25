@@ -7,24 +7,22 @@ public class MultiplayerManager : MonoBehaviour
     public Transform player1Spawn;
     public Transform player2Spawn;
 
+    private bool player1Spawned = false;
+
+    GameObject firstJoinedPlayer;
+
     private void Start()
     {
         PlayerInputManager.instance.onPlayerJoined += OnPlayerJoined;
     }
 
-    //private void OnDisable()
-    //{
-    //    PlayerInputManager.instance.onPlayerJoined -= OnPlayerJoined;
-    //}
-
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        if (FindObjectOfType<StartingCamera>())
+        if (!player1Spawned)
         {
-            Destroy(FindObjectOfType<StartingCamera>().gameObject);
+            player1Spawned = true;
+            firstJoinedPlayer = playerInput.gameObject;
         }
-
-        print(playerInput.gameObject);
 
         var characterController = playerInput.GetComponent<CharacterController>();
         if (characterController != null)
@@ -39,6 +37,11 @@ public class MultiplayerManager : MonoBehaviour
         else if (PlayerInput.all.Count == 2)
         {
             playerInput.transform.position = player2Spawn.position;
+        }
+        else if (PlayerInput.all.Count == 3)
+        {
+            Destroy(firstJoinedPlayer);
+            playerInput.transform.position = player1Spawn.position;
         }
 
         if (characterController != null)
