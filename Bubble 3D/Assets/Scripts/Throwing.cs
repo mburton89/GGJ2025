@@ -20,25 +20,32 @@ public class Throwing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canThrow)
-        {
-            //left click
-            Debug.Log("im left");
-            StartCoroutine(ThrowWithDelay(leftDirection));
+        //if (Input.GetMouseButtonDown(0) && canThrow)
+        //{
+        //    //left click
+        //    Debug.Log("im left");
+        //    StartCoroutine(ThrowWithDelay(leftDirection));
             
 
-        }
-        else if (Input.GetMouseButtonDown(1) && canThrow)
-        {
-            //right click
-            Debug.Log("im right");
-            StartCoroutine(ThrowWithDelay(rightDirection));
+        //}
+        //else if (Input.GetMouseButtonDown(1) && canThrow)
+        //{
+        //    //right click
+        //    Debug.Log("im right");
+        //    StartCoroutine(ThrowWithDelay(rightDirection));
           
-        }
-
+        //}
     }
 
-  
+    public void ThrowLeft()
+    {
+        StartCoroutine(ThrowWithDelay(leftDirection));
+    }
+
+    public void ThrowRight()
+    {
+        StartCoroutine(ThrowWithDelay(rightDirection));
+    }
 
     IEnumerator ThrowWithDelay(Vector3 direction)
     {
