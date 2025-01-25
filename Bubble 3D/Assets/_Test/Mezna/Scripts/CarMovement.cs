@@ -8,18 +8,15 @@ using UnityEngine;
 /* stuff 2 do:
  - make car bounce back when running into walls
  - make car more "weighted" like a car (allow x-rotation to tilt forward and stuff)
- - make car rotation behave more like the car has wheels rather than just spinning the whole car around
 */
 
 public class MovementController : MonoBehaviour
 {
-    public float movementSpeed = 15;
-    public float maxMovementSpeed = 15;
-    public float rotationSpeed = 90;
-    public float jumpForce = 8;
-    public float carGravity = 15;
-    //public float cameraDistance = 7;
-    //public float cameraHeight = 2;
+    public float movementSpeed = 100;
+    public float maxMovementSpeed = 30;
+    public float rotationSpeed = 3;
+    public float jumpForce = 15;
+    public float carGravity = 30;
 
     private Vector3 movementVelocity = Vector3.zero;
 
@@ -30,7 +27,7 @@ public class MovementController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        //rb.freezeRotation = true;
         cameraTransform = Camera.main.transform;
     }
 
@@ -49,17 +46,15 @@ public class MovementController : MonoBehaviour
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
         }
-        else
+        else if (Mathf.Sign(Input.GetAxis("Vertical")) == -1)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed / 2);
         }
 
-        // Rotate car based on horizontal input
-        // TO DO: update car rotation to not rotate whole car, but just "wheels" + add limit to how far they can rotate
-        // May be able to use same code here, just add rotation limit and don't rotate car so camera doesn't follow and give the wrong idea
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * Time.fixedDeltaTime, 0);
+        // Rotate car based on horizontal input and current velocity
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
 
-        // Add extra gravity force
+        // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
 
         // Limit movement speed with counter-force; do NOT limit vertical speed or else car gravity gets screwed up
@@ -79,12 +74,5 @@ public class MovementController : MonoBehaviour
         {
             return false;
         }
-    }
-
-    // DEBUG
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), Vector3.down);
     }
 }
