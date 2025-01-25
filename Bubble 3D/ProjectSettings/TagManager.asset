@@ -4,6 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Undefined
   - Target
   - Area Target
   layers:
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Newspaper
-  - Player
+  - Ground
+  - Ignore Newspaper
   - 
   - 
   - 

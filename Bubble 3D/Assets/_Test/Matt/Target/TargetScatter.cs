@@ -9,8 +9,8 @@ public class TargetScatter : MonoBehaviour
 
     [Header("Placement Settings")]
     public float minSpacing = 10f; // Minimum spacing between prefabs
+    public float prefabHeightOffset = 0f; // Adjust for prefabs that don't rest at the base
 
-    public Transform parent;
     void Start()
     {
         ScatterPrefabs();
@@ -39,15 +39,33 @@ public class TargetScatter : MonoBehaviour
             // Create a spawn position
             Vector3 spawnPosition = new Vector3(randomX + terrainPosition.x, terrainHeight, randomZ + terrainPosition.z);
 
-            // Check if the position is valid (e.g., avoid overlapping if necessary)
+            // Validate position and adjust for prefab height offset
+            spawnPosition.y += prefabHeightOffset;
+
             if (IsValidPosition(spawnPosition))
             {
                 // Select a random prefab
                 GameObject prefab = prefabs[Random.Range(0, prefabs.Length)];
 
                 // Instantiate the prefab
-                Instantiate(prefab, spawnPosition, Quaternion.identity);
+                GameObject instantiatedPrefab = Instantiate(prefab, spawnPosition, Quaternion.identity);
+
+                // Center prefab vertically (using renderer bounds)
+                AlignToTerrain(instantiatedPrefab, spawnPosition);
             }
+        }
+    }
+
+    /// <summary>
+    /// Aligns the prefab based on its Renderer bounds to ensure it rests on the terrain.
+    /// </summary>
+    private void AlignToTerrain(GameObject prefab, Vector3 position)
+    {
+        Renderer renderer = prefab.GetComponentInChildren<Renderer>();
+        if (renderer != null)
+        {
+            float prefabBaseHeight = renderer.bounds.min.y - prefab.transform.position.y;
+            prefab.transform.position = new Vector3(position.x, position.y - prefabBaseHeight, position.z);
         }
     }
 
@@ -56,9 +74,7 @@ public class TargetScatter : MonoBehaviour
     /// </summary>
     private bool IsValidPosition(Vector3 position)
     {
-        // Add logic to check if the position is valid, such as ensuring spacing.
-        // For simplicity, this example assumes all positions are valid.
-        // You can add logic to track and check distances between placed objects.
+        // Example: Add spacing validation here if needed
         return true;
     }
 }

@@ -45,7 +45,9 @@ public class Newspaper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target"))
+        print("collision.gameObject.name: " + collision.gameObject.name + " Tag: " + collision.gameObject.tag);
+
+        if (collision.gameObject.GetComponent<Target>())
         {
             SoundManager.Instance.PlayPunchSound();
             collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -55,9 +57,9 @@ public class Newspaper : MonoBehaviour
             {
                 FindObjectOfType<UIManager>().AddScore(directHitScore);
                 hasHitTarget = true;
-                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!\n + 5 seconds");
+                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!\n" + GameTimer.Instance.timeToAdd + "seconds");
                 SoundManager.Instance.PlayDirectHitSound();
-                GameTimer.Instance.AddTime(5);
+                GameTimer.Instance.AddTime();
                 collision.gameObject.GetComponent<Target>().HandleHit();
             }
         }
@@ -67,7 +69,9 @@ public class Newspaper : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Area Target") && !other.gameObject.GetComponent<Target>().hasBeenHit)
+        print("other.gameObject.name: " + other.gameObject.name + " Tag: " + other.gameObject.tag); 
+
+        if (other.gameObject.GetComponent<Target>() && !other.gameObject.GetComponent<Target>().hasBeenHit)
         {
             float hitDistance = Vector3.Distance(other.gameObject.transform.position, transform.position);
             print("Area Target Hit Distance: " + hitDistance);
@@ -79,9 +83,9 @@ public class Newspaper : MonoBehaviour
             }
 
             FindObjectOfType<UIManager>().AddScore(throwScore);
-            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!\n + 5 seconds");
+            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!\n" + GameTimer.Instance.timeToAdd + "seconds");
             SoundManager.Instance.PlayScorePointSound();
-            GameTimer.Instance.AddTime(5);
+            GameTimer.Instance.AddTime();
             other.gameObject.GetComponent<Target>().HandleHit();
         }
 
