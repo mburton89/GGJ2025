@@ -7,15 +7,18 @@ public class MultiplayerManager : MonoBehaviour
     public Transform player1Spawn;
     public Transform player2Spawn;
 
+    private bool player1Spawned = false;
+
     private void Start()
     {
         PlayerInputManager.instance.onPlayerJoined += OnPlayerJoined;
-    }
 
-    //private void OnDisable()
-    //{
-    //    PlayerInputManager.instance.onPlayerJoined -= OnPlayerJoined;
-    //}
+        //if (!player1Spawned)
+        //{
+        //    PlayerInputManager.instance.JoinPlayer();
+        //    player1Spawned = true;
+        //}
+    }
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
@@ -24,7 +27,13 @@ public class MultiplayerManager : MonoBehaviour
             Destroy(FindObjectOfType<StartingCamera>().gameObject);
         }
 
-        // Assign spawn points dynamically
+
+        var characterController = playerInput.GetComponent<CharacterController>();
+        if (characterController != null)
+        {
+            characterController.enabled = false; // Disable to avoid conflicts
+        }
+
         if (PlayerInput.all.Count == 1)
         {
             playerInput.transform.position = player1Spawn.position;
@@ -34,9 +43,9 @@ public class MultiplayerManager : MonoBehaviour
             playerInput.transform.position = player2Spawn.position;
         }
 
-        //if (FindObjectsOfType<AudioListener>().Length > 1)
-        //{
-        //    Destroy(FindObjectOfType<AudioListener>().gameObject);
-        //}
+        if (characterController != null)
+        {
+            characterController.enabled = true; // Re-enable after setting position
+        }
     }
 }

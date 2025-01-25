@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2650316595937126695}
   m_Layer: 0
-  m_Name: Player With Camera
+  m_Name: Player With Camera - Gamepad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
