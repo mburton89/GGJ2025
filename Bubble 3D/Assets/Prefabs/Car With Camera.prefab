@@ -556,12 +556,12 @@ MonoBehaviour:
   newsPaperPrefab: {fileID: 6136485121297812539, guid: bbdc517ed51a9a448850c8f6b3eb848d,
     type: 3}
   spawnpoint: {fileID: 3133132058330836828}
-  throwingForce: 28
+  throwingForce: 45
   leftDirection: {x: -1, y: 1, z: 0}
   rightDirection: {x: 1, y: 1, z: 0}
   objectLifeTime: 3
   throwDelay: 1
-  upwardVelocity: 3.5
+  upwardVelocity: 1.5
 --- !u!1 &5286947919122538089
 GameObject:
   m_ObjectHideFlags: 0
