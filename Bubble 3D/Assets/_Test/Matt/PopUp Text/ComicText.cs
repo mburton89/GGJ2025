@@ -16,8 +16,8 @@ public class ComicText : MonoBehaviour
 
     public TextMeshProUGUI text;
 
-    public float leftMovementSpeed;
-    public float leftAcceleration;
+    public float upwardMovementSpeed;
+    public float upwardAcceleration;
 
     public float maxMovementSpeed = 200f;
 
@@ -31,18 +31,18 @@ public class ComicText : MonoBehaviour
 
         text.transform.eulerAngles = new Vector3(0, 0, Random.Range(-zRotation, zRotation));
 
-        transform.position = new Vector3(spawnPosition.position.x + xOffset, spawnPosition.position.y, zOffset);
+        transform.position = new Vector3(spawnPosition.position.x + xOffset, spawnPosition.position.y, spawnPosition.position.z);
 
-        float randX = Random.Range(-randOffset, randOffset);
-        float randY = Random.Range(-randOffset, randOffset);
-        Vector3 randVector2Offset = new Vector3(randX, randY, 0);
+        //float randX = Random.Range(-randOffset, randOffset);
+        //float randY = Random.Range(-randOffset, randOffset);
+        //Vector3 randVector2Offset = new Vector3(randX, randY, 0);
 
-        transform.position += randVector2Offset;
+        //transform.position += randVector2Offset;
 
-        if (transform.position.y > 2.5f)
-        {
-            transform.position = new Vector3(transform.position.x, 2, transform.position.z);
-        }
+        //if (transform.position.y > 2.5f)
+        //{
+        //    transform.position = new Vector3(transform.position.x, 2, transform.position.z);
+        //}
 
         transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), 0.25f, 10, 1);
 
@@ -55,10 +55,6 @@ public class ComicText : MonoBehaviour
         }
 
         StartCoroutine(FadeCo());
-
-        //float xPosToMoveTo = transform.position.x - 1f + Random.Range(-.1f, .1f);
-
-        //transform.DOMoveX(xPosToMoveTo, 3, false).SetEase(Ease.InQuad);
 
         Destroy(gameObject, 2.2f);
 
@@ -79,16 +75,16 @@ public class ComicText : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (leftMovementSpeed < maxMovementSpeed)
+        if (upwardMovementSpeed < maxMovementSpeed)
         {
-            leftMovementSpeed *= leftAcceleration;
+            upwardMovementSpeed *= upwardAcceleration;
         }
         else
         {
-            leftMovementSpeed = maxMovementSpeed;
+            upwardMovementSpeed = maxMovementSpeed;
         }
 
-        transform.Translate(Vector3.left * leftMovementSpeed);
+        transform.Translate(Vector3.up * upwardMovementSpeed);
         //transform.position -= Vector3.left * leftMovementSpeed;
     }
 

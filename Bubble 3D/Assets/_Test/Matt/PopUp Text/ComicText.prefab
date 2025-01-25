@@ -65,10 +65,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pilot Swat \n+5 Fuel"
+  m_text: Test
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: eaea76ce0b919bc4e9dcc9757da90513, type: 2}
-  m_sharedMaterial: {fileID: 385046059756749212, guid: eaea76ce0b919bc4e9dcc9757da90513, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d016653898c58ac468d5a266576f4fd9, type: 2}
+  m_sharedMaterial: {fileID: 4716536733281559831, guid: d016653898c58ac468d5a266576f4fd9,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.5
-  m_fontSizeBase: 0.5
+  m_fontSize: 1.5
+  m_fontSizeBase: 1.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -104,21 +105,19 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -13.7
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -164,7 +163,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7655867309944292209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -221,7 +220,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7332999588105146896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,16 +247,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7655867309944292209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b62ed0084b311c245bdda43f3e7e9755, type: 3}
+  m_Script: {fileID: 11500000, guid: 79e0659b4c3109d45b8b08f8bee8efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   zRotation: 30
   amountToRotate: 25
-  xOffset: 0.1
-  yOffset: 2
-  zOffset: -1
-  randOffset: 0.5
+  xOffset: 0
+  yOffset: 3
+  zOffset: 0
+  randOffset: 0
   text: {fileID: 8721676772532200288}
-  leftMovementSpeed: 0.035
-  leftAcceleration: 1.015
+  upwardMovementSpeed: 0.02
+  upwardAcceleration: 1
   maxMovementSpeed: 200

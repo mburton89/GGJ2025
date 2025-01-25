@@ -21,7 +21,7 @@ public class PopupTextManager : MonoBehaviour
 
     public void ShowPopupText(Transform textPosition, string textToShow)
     { 
-        GameObject popupText = Instantiate(popupTextPrefab, textPosition.position, Quaternion.identity, null);
-        popupText.GetComponent<ComicText>().Init(textToShow, textPosition);
+        GameObject popupText = Instantiate(popupTextPrefab);
+        popupText.GetComponentInChildren<ComicText>().Init(textToShow, textPosition);
     }
 }
