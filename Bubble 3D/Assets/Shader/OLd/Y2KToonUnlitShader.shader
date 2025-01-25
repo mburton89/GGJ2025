@@ -1,28 +1,31 @@
-Shader "toonShader"
+Shader "Unlit/Y2KToonUnlitShader"
 {
     Properties
     {
-        _MainTex ("Main Texture", 2D) = "white" {}
-        _Ramp ("Color Ramp", 2D) = "white" {} // Gradient for lighting
-        _Color ("Base Color", Color) = (1, 1, 1, 1)
-        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
-        _OutlineWidth ("Outline Width", Range(0.01, 0.1)) = 0.03
+        _MainTex ("Main Texture", 2D) = "white" {}          // Texture for the object
+        _Color ("Base Color", Color) = (1, 1, 1, 1)         // Tint for the texture
+        _Ramp ("Color Ramp", 2D) = "white" {}              // Gradient texture for toon shading
+        _LightDir ("Light Direction", Vector) = (0, 1, 0)   // Direction of the light
+        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1) // Color of the outline
+        _OutlineWidth ("Outline Width", Range(0.01, 0.1)) = 0.05 // Outline thickness
     }
 
     SubShader
     {
-        Tags { "RenderType" = "Opaque" }
-        LOD 200
-
+        Tags { "RenderType"="Opaque" }
         Pass
         {
-            Name "ToonShadingPass"
-            Tags { "LightMode" = "UniversalForward" }
+            Name "ToonShading"
+            Tags { "LightMode"="Always" }
+            Cull Back
+            ZWrite On
+            ZTest LEqual
 
-            HLSLPROGRAM
+            CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
+
+            
 
             struct appdata
             {
@@ -40,8 +43,9 @@ Shader "toonShader"
             };
 
             sampler2D _MainTex;
-            sampler2D _Ramp;
             float4 _Color;
+            sampler2D _Ramp;
+            float3 _LightDir;
 
             v2f vert(appdata v)
             {
@@ -56,25 +60,27 @@ Shader "toonShader"
             fixed4 frag(v2f i) : SV_Target
             {
                 // Sample the main texture
-                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
+                fixed4 texColor = tex2D(_MainTex, i.uv);
 
-                // Calculate lighting
-                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                // Calculate light intensity (dot product of normal and light direction)
+                float3 lightDir = normalize(_LightDir);
                 float intensity = saturate(dot(i.worldNormal, lightDir));
 
-                // Apply color ramp for toon shading
+                // Sample the color ramp texture based on light intensity
                 float rampValue = tex2D(_Ramp, float2(intensity, 0)).r;
-                col.rgb *= rampValue;
 
-                return col;
+                // Combine the ramp result with the texture and base color
+                fixed4 finalColor = texColor * _Color * rampValue;
+
+                return finalColor;
             }
             ENDCG
         }
 
         Pass
         {
-            Name "OutlinePass"
-            Tags { "LightMode" = "Always" }
+            Name "Outline"
+            Tags { "LightMode"="Always" }
 
             Cull Front
             ZWrite On
@@ -103,9 +109,10 @@ Shader "toonShader"
             {
                 v2f o;
 
-                // Calculate outline offset
+                // Offset the vertex position along the normal for the outline
                 float3 normal = UnityObjectToWorldNormal(v.normal);
                 float3 offset = normal * _OutlineWidth;
+
                 o.outlinePos = UnityObjectToClipPos(v.vertex + float4(offset, 0));
                 o.pos = UnityObjectToClipPos(v.vertex);
                 return o;
@@ -113,11 +120,12 @@ Shader "toonShader"
 
             fixed4 frag(v2f i) : SV_Target
             {
+                // Set the outline color
                 return _OutlineColor;
             }
             ENDCG
         }
     }
 
-    FallBack "Diffuse"
+    FallBack "Unlit"
 }
