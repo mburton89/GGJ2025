@@ -14,7 +14,7 @@ public class Throwing : MonoBehaviour
     public Vector3 leftDirection = new Vector3(-1, 1, 0);
     public Vector3 rightDirection = new Vector3(1, 1, 0);
     public float objectLifeTime;
-    private bool canThrow;
+    private bool canThrow = true;
     public int throwDelay;
 
 
@@ -43,6 +43,7 @@ public class Throwing : MonoBehaviour
 
     IEnumerator ThrowWithDelay(Vector3 direction)
     {
+        Debug.Log("ThrowWithDelay");
         canThrow = false;
 
         GameObject thrownObject = Instantiate(newsPaperPrefab, spawnpoint.position, Quaternion.identity);
@@ -58,7 +59,7 @@ public class Throwing : MonoBehaviour
 
         rb.velocity = Vector3.zero;
         rb.AddForce(direction.normalized * throwingForce, ForceMode.Impulse);
-
+        Debug.Log("Normaized");
         Destroy(thrownObject,objectLifeTime);
 
         yield return new WaitForSeconds(throwDelay);
