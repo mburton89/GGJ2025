@@ -20,6 +20,8 @@ public class Newspaper : MonoBehaviour
     bool hasHitTarget;
     bool hasHitAreaTarget;
 
+    public float hitForce = 200f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,7 @@ public class Newspaper : MonoBehaviour
             FindObjectOfType<UIManager>().AddScore(directHitScore);
             hasHitTarget = true;
             PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
+            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
             SoundManager.Instance.PlayPunchSound();
             SoundManager.Instance.PlayDirectHitSound();
         }

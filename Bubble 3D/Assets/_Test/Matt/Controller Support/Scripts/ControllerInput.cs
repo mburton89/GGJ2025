@@ -18,7 +18,7 @@ public class ControllerInput : MonoBehaviour
     private bool isGrounded;
     private PlayerInput playerInput;
 
-    Throwing throwing;
+    private Throwing throwing;
 
     void Start()
     {
@@ -47,11 +47,17 @@ public class ControllerInput : MonoBehaviour
         // Apply movement relative to the player's facing direction
         characterController.Move(transform.TransformDirection(move) * moveSpeed * Time.deltaTime);
 
-        // Rotate the camera rig based on horizontal input
+        // Rotate the player and camera based on the right joystick's horizontal input
+        Vector2 rightStickInput = playerInput.actions["Look"].ReadValue<Vector2>();
+        float rotation = rightStickInput.x * cameraRotationSpeed * Time.deltaTime;
+
+        // Rotate player
+        transform.Rotate(0, rotation, 0);
+
+        // Rotate camera rig if assigned
         if (cameraRig != null)
         {
-            float horizontalInput = input.x; // Get horizontal input from the joystick
-            cameraRig.Rotate(0, horizontalInput * cameraRotationSpeed * Time.deltaTime, 0);
+            cameraRig.Rotate(0, rotation, 0);
         }
 
         // Jump input
