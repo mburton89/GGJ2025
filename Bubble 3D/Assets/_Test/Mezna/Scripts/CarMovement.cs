@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // thank you deleted reddit user for the tank control script: https://www.reddit.com/r/Unity3D/comments/gd8uwz/3rd_person_tank_control_script/
 
@@ -25,11 +26,16 @@ public class MovementController : MonoBehaviour
     private Rigidbody rb;
     private Transform cameraTransform;
 
+    private PlayerInput playerInput;
+    private Throwing throwing;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         //rb.freezeRotation = true;
         cameraTransform = Camera.main.transform;
+        playerInput = GetComponent<PlayerInput>();
+        throwing = GetComponent<Throwing>();
     }
 
     private void Update()
@@ -38,6 +44,17 @@ public class MovementController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+
+        if (playerInput.actions["ThrowLeft"].triggered)
+        {
+            throwing.ThrowLeft();
+        }
+
+        if (playerInput.actions["ThrowRight"].triggered)
+        {
+            throwing.ThrowRight();
+        }
+
     }
 
     private void FixedUpdate()

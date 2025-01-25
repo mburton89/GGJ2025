@@ -64,7 +64,15 @@ public class Throwing : MonoBehaviour
             yield break;
         }
 
-        rb.velocity = GetComponent<CharacterController>().velocity;
+        if (GetComponent<CharacterController>())
+        { 
+            rb.velocity = GetComponent<CharacterController>().velocity;
+        }
+        else if (GetComponent<Rigidbody>())
+        {
+            rb.velocity = GetComponent<Rigidbody>().velocity;
+        }
+
         Vector3 throwDirection = direction.normalized * throwingForce;
 
         // Calculate throw direction relative to the character's facing direction
