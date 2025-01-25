@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public TargetParent targetParent;
+    [HideInInspector] public bool hasBeenHit;
+    public void HandleHit()
+    { 
+        hasBeenHit = true;
+        targetParent.DisableTargets();
     }
 }
