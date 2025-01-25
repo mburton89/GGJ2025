@@ -50,6 +50,7 @@ public class Newspaper : MonoBehaviour
 
             if (!collision.gameObject.GetComponent<Target>().hasBeenHit)
             {
+                collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 FindObjectOfType<UIManager>().AddScore(directHitScore);
                 hasHitTarget = true;
                 PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
