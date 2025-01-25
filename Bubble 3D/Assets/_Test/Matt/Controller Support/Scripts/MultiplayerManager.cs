@@ -24,7 +24,14 @@ public class MultiplayerManager : MonoBehaviour
             Destroy(FindObjectOfType<StartingCamera>().gameObject);
         }
 
-        // Assign spawn points dynamically
+        print(playerInput.gameObject);
+
+        var characterController = playerInput.GetComponent<CharacterController>();
+        if (characterController != null)
+        {
+            characterController.enabled = false; // Disable to avoid conflicts
+        }
+
         if (PlayerInput.all.Count == 1)
         {
             playerInput.transform.position = player1Spawn.position;
@@ -34,9 +41,9 @@ public class MultiplayerManager : MonoBehaviour
             playerInput.transform.position = player2Spawn.position;
         }
 
-        //if (FindObjectsOfType<AudioListener>().Length > 1)
-        //{
-        //    Destroy(FindObjectOfType<AudioListener>().gameObject);
-        //}
+        if (characterController != null)
+        {
+            characterController.enabled = true; // Re-enable after setting position
+        }
     }
 }
