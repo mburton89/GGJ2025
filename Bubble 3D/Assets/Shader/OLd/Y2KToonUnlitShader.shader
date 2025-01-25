@@ -1,131 +1,132 @@
 Shader "Unlit/Y2KToonUnlitShader"
 {
-    Properties
+     Properties
     {
-        _MainTex ("Main Texture", 2D) = "white" {}          // Texture for the object
-        _Color ("Base Color", Color) = (1, 1, 1, 1)         // Tint for the texture
-        _Ramp ("Color Ramp", 2D) = "white" {}              // Gradient texture for toon shading
-        _LightDir ("Light Direction", Vector) = (0, 1, 0)   // Direction of the light
-        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1) // Color of the outline
-        _OutlineWidth ("Outline Width", Range(0.01, 0.1)) = 0.05 // Outline thickness
+        _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
+        _LightDir ("Light Direction", Vector) = (0, 1, 0)
+        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+        _OutlineWidth ("Outline Width", Range(0.01, 0.1)) = 0.05
     }
 
     SubShader
     {
         Tags { "RenderType"="Opaque" }
+        LOD 200
+
         Pass
         {
             Name "ToonShading"
-            Tags { "LightMode"="Always" }
+            Tags { "LightMode"="UniversalForward" }
             Cull Back
             ZWrite On
             ZTest LEqual
 
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+            HLSLPROGRAM
+            #pragma target 4.5
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            
-
-            struct appdata
+            // Define the vertex structure
+            struct Attributes
             {
-                float4 vertex : POSITION;
+                float4 position : POSITION;
                 float3 normal : NORMAL;
-                float2 uv : TEXCOORD0;
             };
 
-            struct v2f
+            struct Varyings
             {
-                float4 pos : SV_POSITION;
-                float2 uv : TEXCOORD0;
-                float3 worldNormal : TEXCOORD1;
-                float3 worldPos : TEXCOORD2;
+                float4 position : SV_POSITION;
+                float3 worldNormal : TEXCOORD0;
             };
 
-            sampler2D _MainTex;
-            float4 _Color;
-            sampler2D _Ramp;
+            // Properties
+            float4 _BaseColor;
             float3 _LightDir;
 
-            v2f vert(appdata v)
+            Varyings Vert(Attributes v)
             {
-                v2f o;
-                o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+                Varyings o;
+
+                // Transform position from object space to clip space
+                o.position = TransformObjectToHClip(v.position);
+
+                // Transform the normal from object space to world space
+                o.worldNormal = normalize(mul((float3x3)unity_ObjectToWorld, v.normal));
+
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            half4 Frag(Varyings i) : SV_Target
             {
-                // Sample the main texture
-                fixed4 texColor = tex2D(_MainTex, i.uv);
-
-                // Calculate light intensity (dot product of normal and light direction)
+                // Normalize the light direction
                 float3 lightDir = normalize(_LightDir);
+
+                // Compute lighting intensity using the dot product
                 float intensity = saturate(dot(i.worldNormal, lightDir));
 
-                // Sample the color ramp texture based on light intensity
-                float rampValue = tex2D(_Ramp, float2(intensity, 0)).r;
+                // Apply toon shading with the base color and intensity
+                half4 finalColor = _BaseColor * intensity;
 
-                // Combine the ramp result with the texture and base color
-                fixed4 finalColor = texColor * _Color * rampValue;
+                // If the result is black, make sure the base color is visible
+                if (finalColor.rgb == float3(0,0,0))
+                {
+                    finalColor = half4(1, 0, 0, 1); // If black, show red to debug
+                }
 
                 return finalColor;
             }
-            ENDCG
+            ENDHLSL
         }
 
         Pass
         {
             Name "Outline"
             Tags { "LightMode"="Always" }
-
             Cull Front
             ZWrite On
             ZTest LEqual
 
             HLSLPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+            #pragma target 4.5
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            struct appdata
+            // Define the vertex structure
+            struct Attributes
             {
-                float4 vertex : POSITION;
+                float4 position : POSITION;
                 float3 normal : NORMAL;
             };
 
-            struct v2f
+            struct Varyings
             {
-                float4 pos : SV_POSITION;
-                float4 outlinePos : POSITION;
+                float4 position : SV_POSITION;
             };
 
+            // Properties
             float _OutlineWidth;
             float4 _OutlineColor;
 
-            v2f vert(appdata v)
+            Varyings Vert(Attributes v)
             {
-                v2f o;
+                Varyings o;
 
-                // Offset the vertex position along the normal for the outline
-                float3 normal = UnityObjectToWorldNormal(v.normal);
-                float3 offset = normal * _OutlineWidth;
+                // Transform position and add an offset to create the outline
+                float3 worldNormal = normalize(mul((float3x3)unity_ObjectToWorld, v.normal));
+                float3 offset = worldNormal * _OutlineWidth;
 
-                o.outlinePos = UnityObjectToClipPos(v.vertex + float4(offset, 0));
-                o.pos = UnityObjectToClipPos(v.vertex);
+                o.position = TransformObjectToHClip(v.position + float4(offset, 0));
+
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            half4 Frag(Varyings i) : SV_Target
             {
-                // Set the outline color
+                // Return the outline color
                 return _OutlineColor;
             }
-            ENDCG
+            ENDHLSL
         }
     }
 
-    FallBack "Unlit"
+    FallBack "Unlit/Color"
+   
 }
