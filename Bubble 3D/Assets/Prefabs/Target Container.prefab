@@ -52,6 +52,7 @@ MonoBehaviour:
   linkedTargetArea: {fileID: 8584257513813442213}
   linkedParticleSystem: {fileID: 1083617382768764309}
   cyclinder: {fileID: 4706427639736149913}
+  linkedArrow: {fileID: 2536057575052159179}
 --- !u!1 &2536057575052159179
 GameObject:
   m_ObjectHideFlags: 0
