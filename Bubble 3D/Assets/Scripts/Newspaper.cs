@@ -7,10 +7,14 @@ public class Newspaper : MonoBehaviour
 {
     public int maxScore;
     public float maxHitDistance;
-    public GameObject targetPrefab;
 
     public int throwScore;
 
+    [Header("Rotation Settings")]
+    public float rotationSpeed = 100f; // Rotation speed in degrees per second
+    public bool rotateClockwise = true;
+
+    bool hasHitTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -23,16 +27,22 @@ public class Newspaper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!hasHitTarget)
+        {
+            float direction = rotateClockwise ? 1f : -1f;
+            transform.Rotate(0, direction * rotationSpeed * Time.deltaTime, 0);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target"))
+        if (collision.gameObject.CompareTag("Target") && !hasHitTarget)
         {
             float hitDistance = Vector3.Distance(collision.GetContact(0).point, collision.transform.position);
             throwScore = CalculateScore(hitDistance);
             FindObjectOfType<UIManager>().AddScore(throwScore);
+            GetComponent<Rigidbody>().useGravity = true;
+            hasHitTarget = true;
         }
     }
 
