@@ -13,6 +13,17 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource directHit;
     [SerializeField] AudioSource punch;
 
+    public AudioSource motorSound;
+    public float startingMotorVolume;
+    public float startingMotorPitch;
+
+    public float maxMotorVolume;
+    public float maxMotorPitch;
+
+    [HideInInspector] public bool isPlayingMotorSound;
+
+    public float motorSoundIncreaseSpeed;
+
     private void Awake()
     {
         if (Instance == null)
@@ -22,6 +33,22 @@ public class SoundManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (isPlayingMotorSound)
+        {
+            if (motorSound.volume < maxMotorVolume)
+            {
+                motorSound.volume += motorSoundIncreaseSpeed;
+            }
+
+            if (motorSound.pitch < maxMotorPitch)
+            {
+                motorSound.pitch += motorSoundIncreaseSpeed;
+            }
         }
     }
 
@@ -44,5 +71,22 @@ public class SoundManager : MonoBehaviour
     public void PlayPunchSound()
     {
         PlaySound(punch);
+    }
+
+    public void StartMotorSound()
+    {
+        print("StartMotorSound");
+        motorSound.enabled = true;
+        motorSound.Play();
+        isPlayingMotorSound = true;
+    }
+
+    public void StopMotorSound()
+    {
+        motorSound.Stop();
+        motorSound.enabled = false;
+        isPlayingMotorSound = false;
+        motorSound.volume = startingMotorVolume;
+        motorSound.pitch = startingMotorPitch;
     }
 }
