@@ -86,10 +86,36 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 34098764d2853c4418e98e256f5b8911,
         type: 3}
       propertyPath: m_Name
-      value: bottle Variant
+      value: Bottle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34098764d2853c4418e98e256f5b8911,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6345256789998600686}
   m_SourcePrefab: {fileID: 100100000, guid: 34098764d2853c4418e98e256f5b8911, type: 3}
+--- !u!1 &4853493874472386001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 34098764d2853c4418e98e256f5b8911,
+    type: 3}
+  m_PrefabInstance: {fileID: 5736032483505913984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-6345256789998600686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853493874472386001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c9f285f314c5a48b4f5d2a88fc5267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i_AttachLifetime: 0
+  i_timer: 0
+  f_ScoreMod: 0
+  b_Attached: 0
