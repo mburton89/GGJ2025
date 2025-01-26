@@ -505,11 +505,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 100
-  maxMovementSpeed: 30
+  maxMovementSpeed: 10
   rotationSpeed: 3
   jumpForce: 15
   carGravity: 30
   groundCheck: {fileID: 1580368197818193623}
+  controllerAccelerationSpeed: 10
+  controllerReverseSpeed: 8
 --- !u!114 &414890757183549576
 MonoBehaviour:
   m_ObjectHideFlags: 0
