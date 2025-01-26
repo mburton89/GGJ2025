@@ -8,10 +8,16 @@ public class UIManager : MonoBehaviour
 {
     public TMP_Text scoreText;
     public int currentScore;
+    public int finalScore;
 
     public Image boostFill;
     public int maxSlider;
     public int currentSlider;
+
+    public void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
 
     // Start is called before the first frame update
@@ -44,6 +50,11 @@ public class UIManager : MonoBehaviour
     {
         boostFill.fillAmount += amountToAdd;
 
+    }
+
+    public void UpdateFinalScore()
+    {
+        finalScore = currentScore;
     }
 
 }

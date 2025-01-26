@@ -20,6 +20,9 @@ public class MovementController : MonoBehaviour
     public float jumpForce = 15;
     public float carGravity = 30;
 
+    public float totalXRotation;
+    public float totalYRotation;
+
     private Vector3 movementVelocity = Vector3.zero;
 
     public Transform groundCheck;
@@ -107,7 +110,7 @@ public class MovementController : MonoBehaviour
         HandleNewInput();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if (groundCheck.GetComponent<GroundCheck>().isGrounded)
         {
