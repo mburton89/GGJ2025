@@ -14,7 +14,7 @@ public class GameTimer : MonoBehaviour
     public Color warningColor = Color.red;
 
     private float timeRemaining;
-    private bool timerRunning;
+    public bool timerRunning;
 
     public float timeToAdd = 2f;
 
@@ -33,10 +33,8 @@ public class GameTimer : MonoBehaviour
     void Start()
     {
         timeRemaining = startTime;
-        timerRunning = true;
+
         UpdateTimerUI();
-
-
     }
 
     void Update()

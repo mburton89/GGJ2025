@@ -11,6 +11,8 @@ public class MultiplayerManager : MonoBehaviour
 
     GameObject firstJoinedPlayer;
 
+    public GameObject title;
+
     private void Start()
     {
         PlayerInputManager.instance.onPlayerJoined += OnPlayerJoined;
@@ -18,6 +20,9 @@ public class MultiplayerManager : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
+        title.SetActive(false);
+        GameTimer.Instance.timerRunning = true;
+
         if (!player1Spawned)
         {
             player1Spawned = true;
