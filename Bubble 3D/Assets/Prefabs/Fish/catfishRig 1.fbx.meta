@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 6814f74b3aac10049baed1b8d8577f82
+guid: 44c298038e1c3a54fb76d6c89d2b71a1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 897653682a7ffeb47809b8cec4400477, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: catfish base
+    second: {fileID: 2100000, guid: caba2d11651a22948a3387c5d31585c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: catfish fins
+    second: {fileID: 2100000, guid: 701fd4298c29a0e498d5e5b7240dcb80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: catfish whiskers
+    second: {fileID: 2100000, guid: f1175fefd4d3ebd44a1a228fecfffd90, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

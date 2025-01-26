@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public Button restartButton;
     public Button mainMenuButton;
 
+    [HideInInspector] public bool gameIsOver;
+
     void Awake()
     {
         if (Instance == null)
@@ -40,6 +42,13 @@ public class GameManager : MonoBehaviour
 
     public void HandleGameOver()
     {
+        Newspaper[] newspapers = FindObjectsByType<Newspaper>(FindObjectsSortMode.None);
+        foreach (Newspaper newspaper in newspapers)
+        {
+            Destroy(newspaper.gameObject);
+        }
+        gameIsOver = true;
+
         gameOverContainer.SetActive(true);
         restartButton.onClick.AddListener(Restart);
         mainMenuButton.onClick.AddListener(GoToMainMenu);

@@ -253,7 +253,7 @@ MonoBehaviour:
   zRotation: 30
   amountToRotate: 25
   xOffset: 0
-  yOffset: 3
+  yOffset: 7
   zOffset: 0
   randOffset: 0
   text: {fileID: 8721676772532200288}

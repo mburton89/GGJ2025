@@ -19,6 +19,7 @@ public class Throwing : MonoBehaviour
 
     public float upwardVelocity;
 
+
     // Update is called once per frame
     void Update()
     {
@@ -41,16 +42,19 @@ public class Throwing : MonoBehaviour
 
     public void ThrowLeft()
     {
+        if (GameManager.Instance.gameIsOver) return;
         StartCoroutine(ThrowWithDelay(leftDirection));
     }
 
     public void ThrowRight()
     {
+        if (GameManager.Instance.gameIsOver) return;
         StartCoroutine(ThrowWithDelay(rightDirection));
     }
 
     public void ThrowForward()
     {
+        if (GameManager.Instance.gameIsOver) return;
         StartCoroutine(ThrowWithDelay(transform.forward));
     }
 
