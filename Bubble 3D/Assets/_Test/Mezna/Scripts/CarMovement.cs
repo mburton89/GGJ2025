@@ -53,14 +53,15 @@ public class MovementController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        //if (Input.GetButtonDown("Jump") && IsGrounded())
+        //{
+        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //}
 
-        if (playerInput.actions["Jump"].triggered)
+        if (playerInput.actions["Jump"].triggered && IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            SoundManager.Instance.PlayJumpSound();
         }
 
         if (playerInput.actions["ThrowLeft"].triggered)
@@ -76,6 +77,21 @@ public class MovementController : MonoBehaviour
         if (playerInput.actions["ThrowForward"].triggered)
         {
             throwing.ThrowForward();
+        }
+
+        if (playerInput.actions["SteerLeft"].IsPressed())
+        {
+            //transform.rotation *= Quaternion.Euler(0, -1 * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            keyboardSteerInput = new Vector2(-1, 0);
+        }
+        else if (playerInput.actions["SteerRight"].IsPressed())
+        {
+            //transform.rotation *= Quaternion.Euler(0, 1 * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            keyboardSteerInput = new Vector2(1, 0);
+        }
+        else
+        {
+            keyboardSteerInput = new Vector2(0, 0);
         }
     }
 
@@ -93,7 +109,7 @@ public class MovementController : MonoBehaviour
         }*/
 
         // Rotate car based on horizontal input and current velocity
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        //transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
 
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
@@ -126,13 +142,15 @@ public class MovementController : MonoBehaviour
         controllerReverseAction = playerInput.actions["Reverse"];
     }
 
+
+    Vector2 keyboardSteerInput;
     void HandleNewInput()
     {
         // Read the Vector2 value from the Steer action
         Vector2 steerInput = steerAction.ReadValue<Vector2>();
 
         // Extract the horizontal component for steering
-        float horizontalInput = steerInput.x;
+        float horizontalInput = steerInput.x + keyboardSteerInput.x;
 
         // Apply rotation based on the horizontal input
         transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
