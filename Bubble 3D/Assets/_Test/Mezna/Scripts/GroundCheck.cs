@@ -10,8 +10,14 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Reset car rotation to be sitting upright upon landing
         // localRotation does what i want it to, so it's what i'm using
-        transform.parent.localRotation = Quaternion.Euler(0, transform.parent.localRotation.y, 0);
+
+        // Rotation of grounded car body (Car)
+        transform.parent.parent.localRotation = Quaternion.Euler(0, cameraTransform.localEulerAngles.y, 0);
+
+        // Rotation of aerial car body (Rotation Body)
+        transform.parent.localRotation = Quaternion.Euler(0, 0, 0);
 
         // Check for trick upon landing
         GetComponentInParent<CarTrickDetection>().DetermineTrick();
