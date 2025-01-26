@@ -77,7 +77,6 @@ public class MovementController : MonoBehaviour
         {
             throwing.ThrowForward();
         }
-
     }
 
     private void FixedUpdate()
@@ -147,5 +146,17 @@ public class MovementController : MonoBehaviour
 
         // Apply forces to the Rigidbody
         rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
+
+        if (forwardForce > 0.1f)
+        {
+            if (!SoundManager.Instance.isPlayingMotorSound)
+            { 
+                SoundManager.Instance.StartMotorSound();
+            }
+        }
+        else
+        {
+            SoundManager.Instance.StopMotorSound();
+        }
     }
 }
