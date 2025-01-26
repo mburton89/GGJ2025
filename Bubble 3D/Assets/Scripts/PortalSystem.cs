@@ -6,21 +6,26 @@ public class PortalSystem : MonoBehaviour
 {
     
     public Vector3 v3_EjectPoint;
-    public PortalSystem ps_PartnerPortal;
+    public string s_TargetPortalName;
+    public PortalManager pm_PortalManager;
 
     public void Awake()
     {
         v3_EjectPoint = transform.GetChild(0).position;
+        pm_PortalManager = FindObjectOfType<PortalManager>();
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") == true)
         {
-            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            other.GetComponent<Rigidbody>().position = ps_PartnerPortal.v3_EjectPoint;
-            other.GetComponent<Rigidbody>().velocity = new Vector3(0, 10, 0);
+            pm_PortalManager.ActivatePortal(s_TargetPortalName);
+        } else
+        {
+            print("Something went wrong");
         }
     }
+
+
 
 }
