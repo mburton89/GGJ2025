@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -34,6 +35,8 @@ public class GameTimer : MonoBehaviour
         timeRemaining = startTime;
         timerRunning = true;
         UpdateTimerUI();
+
+
     }
 
     void Update()
@@ -103,5 +106,6 @@ public class GameTimer : MonoBehaviour
     {
         // Add logic here for what happens when the timer reaches zero
         Debug.Log("Time's up!");
+        GameManager.Instance.HandleGameOver();
     }
 }
