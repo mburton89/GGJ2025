@@ -14,7 +14,7 @@ using UnityEngine.InputSystem;
 public class MovementController : MonoBehaviour
 {
     public float movementSpeed = 100;
-    public float boostedMovementSpeed = 150;
+    public float boostedMovementSpeed = 115;
     public float maxMovementSpeed = 30;
     public float currentSpeed;
     public float rotationSpeed = 3;

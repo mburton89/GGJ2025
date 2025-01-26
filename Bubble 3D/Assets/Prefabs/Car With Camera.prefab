@@ -503,7 +503,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 100
+  boostedMovementSpeed: 115
   maxMovementSpeed: 15
+  currentSpeed: 0
   rotationSpeed: 3
   jumpForce: 15
   carGravity: 30
