@@ -217,14 +217,7 @@ public class MovementController : MonoBehaviour
         float horizontalInput = steerInput.x + keyboardSteerInput.x;
 
         // Apply rotation based on the horizontal input
-        if (IsGrounded())
-        {
-            transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
-        }
-        else
-        {
-            rotationBody.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
-        }
+
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();
         //print("accelerateInput " + accelerateInput);
@@ -233,6 +226,19 @@ public class MovementController : MonoBehaviour
         // Calculate forward and backward forces
         float forwardForce = accelerateInput * controllerAccelerationSpeed;
         float backwardForce = reverseInput * controllerReverseSpeed;
+
+        if (IsGrounded())
+        {
+            if (backwardForce > 0.2f)
+            {
+                horizontalInput = -horizontalInput;
+            }
+            transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        }
+        else
+        {
+            rotationBody.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+        }
 
         // Apply forces to the Rigidbody
         if (IsGrounded())
