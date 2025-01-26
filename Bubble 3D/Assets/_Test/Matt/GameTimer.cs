@@ -27,7 +27,7 @@ public class GameTimer : MonoBehaviour
         { 
             Destroy(gameObject);
         }
-    }
+    } 
 
     void Start()
     {
