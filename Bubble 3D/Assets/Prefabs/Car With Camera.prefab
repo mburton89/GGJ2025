@@ -507,6 +507,8 @@ MonoBehaviour:
   rotationSpeed: 3
   jumpForce: 15
   carGravity: 30
+  totalXRotation: 0
+  totalYRotation: 0
   groundCheck: {fileID: 1580368197818193623}
   rotationBody: {fileID: 3408865970381086889}
   cameraTransform: {fileID: 1267776391407791329}
@@ -611,6 +613,7 @@ GameObject:
   - component: {fileID: 5937659293320943846}
   - component: {fileID: 6190605001267560015}
   - component: {fileID: 7575232526328918578}
+  - component: {fileID: 6977692174978856365}
   m_Layer: 7
   m_Name: Rotation Body
   m_TagString: Untagged
@@ -707,6 +710,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6977692174978856365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143052331540870484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14be4211218dbb24d9e88235a34c1904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7352801539938605164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,3 +1190,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
+  cameraTransform: {fileID: 1267776391407791329}

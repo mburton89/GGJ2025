@@ -14,13 +14,17 @@ using UnityEngine.InputSystem;
 public class MovementController : MonoBehaviour
 {
     public float movementSpeed = 100;
+    public float boostedMovementSpeed = 150;
     public float maxMovementSpeed = 30;
+    public float currentSpeed;
     public float rotationSpeed = 3;
     public float jumpForce = 15;
     public float carGravity = 30;
 
     public float totalXRotation;
     public float totalYRotation;
+
+    private bool isBoosting;
 
     private Vector3 movementVelocity = Vector3.zero;
     private Vector3 lastVelocity;
@@ -105,8 +109,17 @@ public class MovementController : MonoBehaviour
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isBoosting = true;
+        }
+        else
+        {
+            isBoosting = false;
+        }
+
         // Limit movement speed with counter-force; do NOT limit vertical speed or else car gravity gets screwed up
-        if (rb.velocity.magnitude > maxMovementSpeed)
+        if ((rb.velocity.magnitude > maxMovementSpeed && !isBoosting) || (rb.velocity.magnitude > boostedMovementSpeed && isBoosting))
         {
             rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z);
         }
