@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MempfhishMainMap.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: a7c3d70131ed6e148b5537f72c0011fa
+  - enabled: 1
+    path: Assets/Scenes/JNBTest - Throwing.unity
+    guid: b81d72dda0c76694a923c9f13de390c9
   m_configObjects: {}

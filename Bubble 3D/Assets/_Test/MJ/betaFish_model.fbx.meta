@@ -3,7 +3,12 @@ guid: ee49f41282e3633458c6f86180d269e2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: betta body blue
+    second: {fileID: 2100000, guid: 9a155ee00b3571c47a02ecad20bd649c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
