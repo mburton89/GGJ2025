@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d5aa31f40fb5b9947a8d5155cbdc870f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.053207
+      value: -84.40271
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5aa31f40fb5b9947a8d5155cbdc870f,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d5aa31f40fb5b9947a8d5155cbdc870f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.037952
+      value: 75.812706
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5aa31f40fb5b9947a8d5155cbdc870f,
         type: 3}
@@ -78,10 +78,15 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d5aa31f40fb5b9947a8d5155cbdc870f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a68cbecc68d716439cd3b3f22ce01b9, type: 2}
     - target: {fileID: 919132149155446097, guid: d5aa31f40fb5b9947a8d5155cbdc870f,
         type: 3}
       propertyPath: m_Name
-      value: pink_coral_textured (1) Variant
+      value: Pink Coral
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

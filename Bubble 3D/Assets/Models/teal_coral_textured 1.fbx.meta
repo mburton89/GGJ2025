@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: coral blue
     second: {fileID: 2100000, guid: 5a68cbecc68d716439cd3b3f22ce01b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: coral magenta
+    second: {fileID: 2100000, guid: 7e5ef6a13b2a82a4bb46220d9880a369, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
