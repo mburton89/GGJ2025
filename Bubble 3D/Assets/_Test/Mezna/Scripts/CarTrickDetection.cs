@@ -32,15 +32,15 @@ public class CarTrickDetection : MonoBehaviour
             // A sane person would tell me to use a switch statement. Good thing we don't have any here.
 
             // Singles
-            if (totalXRotation >= 360 && Mathf.Abs(totalYRotation) < 180)
+            if (totalXRotation >= 300 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Frontflip!");
             }
-            if (totalXRotation <= -360 && Mathf.Abs(totalYRotation) < 180)
+            if (totalXRotation <= -300 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Backflip!");
             }
-            if (Mathf.Abs(totalYRotation) >= 360 && Mathf.Abs(totalXRotation) < 180)
+            if (Mathf.Abs(totalYRotation) >= 300 && Mathf.Abs(totalXRotation) < 240)
             {
                 print("Trick determined as: Sideflip!");
             }
@@ -54,45 +54,45 @@ public class CarTrickDetection : MonoBehaviour
             }
 
             // Doubles
-            if (totalXRotation >= 720 && Mathf.Abs(totalYRotation) < 180)
+            if (totalXRotation >= 660 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Double Frontflip!");
             }
-            if (totalXRotation <= -720 && Mathf.Abs(totalYRotation) < 180)
+            if (totalXRotation <= -660 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Double Backflip!");
             }
-            if (Mathf.Abs(totalYRotation) >= 720 && Mathf.Abs(totalXRotation) < 180)
+            if (Mathf.Abs(totalYRotation) >= 660 && Mathf.Abs(totalXRotation) < 240)
             {
                 print("Trick determined as: Double Sideflip!");
             }
-            if (totalXRotation >= 540 && totalXRotation < 660 && Mathf.Abs(totalYRotation) >= 540 && Mathf.Abs(totalYRotation) < 660)
+            if (totalXRotation >= 450 && totalXRotation < 600 && Mathf.Abs(totalYRotation) >= 450 && Mathf.Abs(totalYRotation) < 600)
             {
                 print("Trick determined as: Double Front Diagonal Flip!");
             }
-            if (totalXRotation <= -540 && totalXRotation > -660 && Mathf.Abs(totalYRotation) >= 540 && Mathf.Abs(totalYRotation) < 660)
+            if (totalXRotation <= -450 && totalXRotation > -600 && Mathf.Abs(totalYRotation) >= 450 && Mathf.Abs(totalYRotation) < 600)
             {
                 print("Trick determined as: Double Back Diagonal Flip!");
             }
 
             // Triples and beyond aka "Masters"
-            if (totalXRotation >= 1080 && (totalYRotation < 180 || totalYRotation > -180))
+            if (totalXRotation >= 1020 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Master Frontflip!");
             }
-            if (totalXRotation <= -1080 && (totalYRotation < 180 || totalYRotation > -180))
+            if (totalXRotation <= -1020 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Master Backflip!");
             }
-            if (Mathf.Abs(totalYRotation) >= 1080 && Mathf.Abs(totalXRotation) < 180)
+            if (Mathf.Abs(totalYRotation) >= 1020 && Mathf.Abs(totalXRotation) < 240)
             {
                 print("Trick determined as: Master Sideflip!");
             }
-            if (totalXRotation >= 900 && totalXRotation < 1020 && Mathf.Abs(totalYRotation) >= 900 && Mathf.Abs(totalYRotation) < 1020)
+            if (totalXRotation >= 720 && totalXRotation < 1020 && Mathf.Abs(totalYRotation) >= 720 && Mathf.Abs(totalYRotation) < 1020)
             {
                 print("Trick determined as: Master Front Diagonal Flip!");
             }
-            if (totalXRotation <= -900 && totalXRotation > -1020 && Mathf.Abs(totalYRotation) >= 900 && Mathf.Abs(totalYRotation) < 1020)
+            if (totalXRotation <= -720 && totalXRotation > -1020 && Mathf.Abs(totalYRotation) >= 720 && Mathf.Abs(totalYRotation) < 1020)
             {
                 print("Trick determined as: Master Back Diagonal Flip!");
             }
