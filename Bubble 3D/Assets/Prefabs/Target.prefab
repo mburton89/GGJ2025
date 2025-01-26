@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4498625625241827561}
   - component: {fileID: 5185334481120795007}
-  - component: {fileID: 20762908933711441}
   - component: {fileID: 319594907825249779}
   - component: {fileID: 3772818167000650199}
   m_Layer: 0
@@ -75,48 +74,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6228029555879668761}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &20762908933711441
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228029555879668761}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 02c340b23ef58ab4a9f3fc47375bd85e, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &319594907825249779
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -153,8 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcModels:
-  - {fileID: 6131393293365067477, guid: 2ea3237f7fc82044282fd2b6b4ec7a64, type: 3}
-  - {fileID: 919132149155446097, guid: 6fccad5212cd3f94daa60a802fc86729, type: 3}
-  - {fileID: 919132149155446097, guid: 6814f74b3aac10049baed1b8d8577f82, type: 3}
+  - {fileID: 253832764865095657, guid: a501b2dac1a01b140a97ec35f7c784a9, type: 3}
+  - {fileID: 253832764865095657, guid: c765bfef77efbed4fb167bc55761a656, type: 3}
+  - {fileID: 253832764865095657, guid: f18011b69f1cd6d42b03bf36d344cc18, type: 3}
   npcParents:
   - {fileID: 5025778904907688417}
