@@ -155,14 +155,18 @@ public class MovementController : MonoBehaviour
             float verticalInput = stickInput.y;
             float horizontalInput = stickInput.x;
 
-            if (moveUpAction.action.IsPressed()) verticalInput += 1f;
+            if (playerInput.actions["MoveW"].IsPressed())
+            {
+                verticalInput += 1f;
+                print("UHHH HELLO: " + verticalInput);
+            } 
+            
             if (moveDownAction.action.IsPressed()) verticalInput -= 1f;
 
             if (moveLeftAction.action.IsPressed()) horizontalInput -= 1f;
             if (moveRightAction.action.IsPressed()) horizontalInput += 1f;
 
-            print("verticalInput: " + verticalInput);
-            print("horizontalInput: " + horizontalInput);
+   
 
             // Calculate cumulative rotations.
             totalXRotation += Mathf.Abs(rotationBody.localRotation.eulerAngles.x - lastBodyRotation.x) * Mathf.Sign(verticalInput) * 180;
