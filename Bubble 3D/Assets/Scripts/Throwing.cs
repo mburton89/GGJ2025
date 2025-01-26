@@ -49,6 +49,11 @@ public class Throwing : MonoBehaviour
         StartCoroutine(ThrowWithDelay(rightDirection));
     }
 
+    public void ThrowForward()
+    {
+        StartCoroutine(ThrowWithDelay(transform.forward));
+    }
+
     IEnumerator ThrowWithDelay(Vector3 direction)
     {
         canThrow = false;
@@ -64,20 +69,33 @@ public class Throwing : MonoBehaviour
             yield break;
         }
 
-        rb.velocity = Vector3.zero;
-        Vector3 throwDirection = direction.normalized * throwingForce;
+        if (GetComponent<CharacterController>())
+        { 
+            rb.velocity = GetComponent<CharacterController>().velocity;
+        }
+        else if (GetComponent<Rigidbody>())
+        {
+            rb.velocity = GetComponent<Rigidbody>().velocity;
+        }
 
-        // Calculate throw direction relative to the character's facing direction
-        Vector3 relativeThrowDirection = transform.TransformDirection(new Vector3(throwDirection.x, 0, throwDirection.z));
+        Vector3 newThrowDirection;
 
-        // Add upward velocity to the throw direction
-        Vector3 newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
+        if (direction == transform.forward)
+        {
+            Vector3 throwDirection = direction.normalized * throwingForce;
+            newThrowDirection = new Vector3(throwDirection.x, upwardVelocity, throwDirection.z);
+        }
+        else
+        {
+            Vector3 throwDirection = direction.normalized * throwingForce;
+            Vector3 relativeThrowDirection = transform.TransformDirection(new Vector3(throwDirection.x, 0, throwDirection.z));
+            newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
+        }
 
         rb.AddForce(newThrowDirection, ForceMode.Impulse);
-        //rb.AddTorque(new Vector3(newspaperTorqueX, newspaperTorqueY, newspaperTorqueZ));
-        Debug.Log("Normaized");
-        Destroy(thrownObject,objectLifeTime);
+        rb.AddForce(transform.forward * throwingForce / 2, ForceMode.Impulse);
 
+        Destroy(thrownObject,objectLifeTime);
         yield return new WaitForSeconds(throwDelay);
         canThrow = true;
     }
