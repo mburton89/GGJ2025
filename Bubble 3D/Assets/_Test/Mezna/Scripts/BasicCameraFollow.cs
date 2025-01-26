@@ -4,7 +4,7 @@ public class BasicCameraFollow : MonoBehaviour
 {
     [Header("Follow Settings")]
     public Transform target; // The player or object to follow
-    public Vector3 offset = new Vector3(0f, 5f, -7f); // Offset from the target
+    public Vector3 offset = new Vector3(0f, 2f, -5f); // Offset from the target
     public float followSpeed = 10f; // How quickly the camera follows the target
     public float rotationSpeed = 5f; // How smoothly the camera rotates
 
