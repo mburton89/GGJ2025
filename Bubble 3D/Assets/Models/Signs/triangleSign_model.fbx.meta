@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: 7c80ec6d750c2ac41b00382e514d15ba
+guid: 30cc4a6d5fa5d1b448385a660661eab2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: building deco
-    second: {fileID: 2100000, guid: 2ffd64ce4acb58e46bc146e4daae1d34, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: building metal trim
-    second: {fileID: 2100000, guid: e55cd0c1b68e6904c8bf3bc3a3d5d349, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
