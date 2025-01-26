@@ -14,7 +14,9 @@ using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
-    public float movementSpeed = 100;
+    public float normalSpeed = 100;
+    public float boostedSpeed = 150;
+    public float currentSpeed;
     public float maxMovementSpeed = 30;
     public float rotationSpeed = 3;
     public float jumpForce = 15;
@@ -55,12 +57,28 @@ public class MovementController : MonoBehaviour
             throwing.ThrowRight();
         }
 
+
+
+
+
     }
 
     private void FixedUpdate()
     {
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = boostedSpeed;
+            FindObjectOfType<UIManager>().AdjustSlider(-.001f);
+        }
+        else
+        {
+            currentSpeed = normalSpeed;
+        }
+
+
         // Add force to accelerate car; go slower if moving backwards
-        rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
+        rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * currentSpeed);
         /*if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
         {
             rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
