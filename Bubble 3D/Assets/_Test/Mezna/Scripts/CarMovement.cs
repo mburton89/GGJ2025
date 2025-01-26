@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 /* stuff 2 do:
  - make car bounce back when running into walls
  - make car more "weighted" like a car (allow x-rotation to tilt forward and stuff)
+ - make car rotate freely instead of accelerating while in the air
 */
 
 public class MovementController : MonoBehaviour
@@ -19,16 +20,11 @@ public class MovementController : MonoBehaviour
     public float jumpForce = 15;
     public float carGravity = 30;
 
-    public float totalXRotation;
-    public float totalYRotation;
-
     private Vector3 movementVelocity = Vector3.zero;
-    private Vector3 lastVelocity;
 
     public Transform groundCheck;
-    public Transform rotationBody;
     private Rigidbody rb;
-    public Transform cameraTransform;
+    private Transform cameraTransform;
 
     private PlayerInput playerInput;
     private Throwing throwing;
@@ -62,7 +58,7 @@ public class MovementController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        if (playerInput.actions["Jump"].triggered && IsGrounded())
+        if (playerInput.actions["Jump"].triggered)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -81,26 +77,23 @@ public class MovementController : MonoBehaviour
         {
             throwing.ThrowForward();
         }
-
     }
 
     private void FixedUpdate()
     {
-        // Rotate car based on horizontal input (and current velocity while grounded)
-        if (IsGrounded())
+        // Add force to accelerate car; go slower if moving backwards
+        //rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
+        /*if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
         {
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
         }
-        else
+        else if (Mathf.Sign(Input.GetAxis("Vertical")) == -1)
         {
-            Quaternion lastBodyRotation = rotationBody.localRotation;
+            rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed / 2);
+        }*/
 
-            rotationBody.rotation *= Quaternion.Euler(Input.GetAxis("Vertical") * rotationSpeed * 60 * Time.fixedDeltaTime, Input.GetAxis("Horizontal") * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
-
-            // Calculate rotation for tricks; multiplying by 180 as a cheap method to get "accurate" calculation
-            totalXRotation += Mathf.Abs(rotationBody.localRotation.x - lastBodyRotation.x) * Mathf.Sign(Input.GetAxis("Vertical")) * 180;
-            totalYRotation += Mathf.Abs(rotationBody.localRotation.y - lastBodyRotation.y) * Mathf.Sign(Input.GetAxis("Horizontal")) * 180;
-        }
+        // Rotate car based on horizontal input and current velocity
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
 
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
@@ -114,7 +107,7 @@ public class MovementController : MonoBehaviour
         HandleNewInput();
     }
 
-    public bool IsGrounded()
+    private bool IsGrounded()
     {
         if (groundCheck.GetComponent<GroundCheck>().isGrounded)
         {
@@ -122,7 +115,6 @@ public class MovementController : MonoBehaviour
         }
         else
         {
-            lastVelocity = rb.velocity;
             return false;
         }
     }
@@ -143,17 +135,9 @@ public class MovementController : MonoBehaviour
         float horizontalInput = steerInput.x;
 
         // Apply rotation based on the horizontal input
-        if (IsGrounded())
-        {
-            transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
-        }
-        else
-        {
-            rotationBody.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
-        }
+        transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();
-        //print("accelerateInput " + accelerateInput);
         float reverseInput = controllerReverseAction.ReadValue<float>();
 
         // Calculate forward and backward forces
@@ -161,13 +145,18 @@ public class MovementController : MonoBehaviour
         float backwardForce = reverseInput * controllerReverseSpeed;
 
         // Apply forces to the Rigidbody
-        if (IsGrounded())
+        rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
+
+        if (forwardForce > 0.1f)
         {
-            rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
+            if (!SoundManager.Instance.isPlayingMotorSound)
+            { 
+                SoundManager.Instance.StartMotorSound();
+            }
         }
         else
         {
-            rb.velocity = lastVelocity;
+            SoundManager.Instance.StopMotorSound();
         }
     }
 }
