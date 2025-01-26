@@ -139,7 +139,6 @@ public class MovementController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();
-        print("accelerateInput " + accelerateInput);
         float reverseInput = controllerReverseAction.ReadValue<float>();
 
         // Calculate forward and backward forces

@@ -500,12 +500,61 @@ MonoBehaviour:
   rightDirection: {x: 1, y: 1, z: 0}
   objectLifeTime: 3
   throwDelay: 1
+  upwardVelocity: 0
 --- !u!4 &858482645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2650316595937126695, guid: c822599fefe6bbc4daf24c4f6f208d2c,
     type: 3}
   m_PrefabInstance: {fileID: 858482642}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1313318110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1313318112}
+  - component: {fileID: 1313318111}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1313318111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313318110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac271e0a4a6aa8d40888f14a5dd2c81a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  currentScore: 0
+  startButton: {fileID: 0}
+  quitButton: {fileID: 0}
+--- !u!4 &1313318112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313318110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2008.9292, y: -554.3613, z: -2484.5586}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6227074102519053205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -681,3 +730,4 @@ SceneRoots:
   - {fileID: 6537680340514667476}
   - {fileID: 6227074102519053205}
   - {fileID: 858482642}
+  - {fileID: 1313318112}
