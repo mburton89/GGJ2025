@@ -21,6 +21,9 @@ public class MovementController : MonoBehaviour
     public float jumpForce = 15;
     public float carGravity = 30;
 
+    public float currentAirAmount;
+    public float maxAirAmount = 100;
+
     public float totalXRotation;
     public float totalYRotation;
 
@@ -48,10 +51,13 @@ public class MovementController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        //rb.freezeRotation = true;
+        rb.freezeRotation = true;
         cameraTransform = Camera.main.transform;
         playerInput = GetComponent<PlayerInput>();
         throwing = GetComponent<Throwing>();
+
+        // Start with half of the air/boost meter filled
+        FindObjectOfType<UIManager>().AdjustSlider(0.5f);
     }
 
     private void Start()
@@ -90,6 +96,9 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        currentAirAmount -= 0.1f;
+        FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
+
         // Rotate car based on horizontal input (and current velocity while grounded)
         if (IsGrounded())
         {
