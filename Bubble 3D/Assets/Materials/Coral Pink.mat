@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Coral Pink
-  m_Shader: {fileID: -6465566751694194690, guid: 6bc36864e308e444193df5d015f04241,
+  m_Shader: {fileID: -6465566751694194690, guid: 222c60db09416f14197de1b062e1e326,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -85,6 +85,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2D_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D_2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D_3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture3D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -142,7 +154,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.21735305, g: 0.6931712, b: 0.64037806, a: 1}
-    - _Color: {r: 1, g: 0.48584908, b: 0.8393278, a: 1}
+    - _Color: {r: 0.9622642, g: 0.6581524, b: 0.8670841, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _LightDir: {r: 0, g: 1, b: 0, a: 1}
     - _OutlineColor: {r: 0.8396226, g: 0, b: 0, a: 1}
