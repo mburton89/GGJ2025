@@ -9,22 +9,33 @@ using UnityEngine.InputSystem;
 /* stuff 2 do:
  - make car bounce back when running into walls
  - make car more "weighted" like a car (allow x-rotation to tilt forward and stuff)
- - make car rotate freely instead of accelerating while in the air
 */
 
 public class MovementController : MonoBehaviour
 {
     public float movementSpeed = 100;
+    public float boostedMovementSpeed = 115;
     public float maxMovementSpeed = 30;
+    public float currentSpeed;
     public float rotationSpeed = 3;
     public float jumpForce = 15;
     public float carGravity = 30;
 
+    public float currentAirAmount;
+    public float maxAirAmount = 100;
+
+    public float totalXRotation;
+    public float totalYRotation;
+
+    private bool isBoosting;
+
     private Vector3 movementVelocity = Vector3.zero;
+    private Vector3 lastVelocity;
 
     public Transform groundCheck;
+    public Transform rotationBody;
     private Rigidbody rb;
-    private Transform cameraTransform;
+    public Transform cameraTransform;
 
     private PlayerInput playerInput;
     private Throwing throwing;
@@ -40,10 +51,16 @@ public class MovementController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        //rb.freezeRotation = true;
+        rb.freezeRotation = true;
         cameraTransform = Camera.main.transform;
         playerInput = GetComponent<PlayerInput>();
         throwing = GetComponent<Throwing>();
+
+        // Start with half of the air/boost meter filled
+        if (FindObjectOfType<UIManager>() != null)
+        {
+            FindObjectOfType<UIManager>().AdjustSlider(0.5f);
+        }
     }
 
     private void Start()
@@ -53,15 +70,14 @@ public class MovementController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetButtonDown("Jump") && IsGrounded())
-        //{
-        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        //}
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
 
         if (playerInput.actions["Jump"].triggered && IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            SoundManager.Instance.PlayJumpSound();
         }
 
         if (playerInput.actions["ThrowLeft"].triggered)
@@ -79,43 +95,46 @@ public class MovementController : MonoBehaviour
             throwing.ThrowForward();
         }
 
-        if (playerInput.actions["SteerLeft"].IsPressed())
-        {
-            //transform.rotation *= Quaternion.Euler(0, -1 * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
-            keyboardSteerInput = new Vector2(-1, 0);
-        }
-        else if (playerInput.actions["SteerRight"].IsPressed())
-        {
-            //transform.rotation *= Quaternion.Euler(0, 1 * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
-            keyboardSteerInput = new Vector2(1, 0);
-        }
-        else
-        {
-            keyboardSteerInput = new Vector2(0, 0);
-        }
     }
 
     private void FixedUpdate()
     {
-        // Add force to accelerate car; go slower if moving backwards
-        //rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
-        /*if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
+        currentAirAmount -= 0.1f;
+        if (FindObjectOfType<UIManager>() != null)
         {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
+            FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
         }
-        else if (Mathf.Sign(Input.GetAxis("Vertical")) == -1)
-        {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed / 2);
-        }*/
 
-        // Rotate car based on horizontal input and current velocity
-        //transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        // Rotate car based on horizontal input (and current velocity while grounded)
+        if (IsGrounded())
+        {
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        }
+        else
+        {
+            Quaternion lastBodyRotation = rotationBody.localRotation;
+
+            rotationBody.rotation *= Quaternion.Euler(Input.GetAxis("Vertical") * rotationSpeed * 60 * Time.fixedDeltaTime, Input.GetAxis("Horizontal") * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+
+            // Calculate rotation for tricks; multiplying by 180 as a cheap method to get "accurate" calculation
+            totalXRotation += Mathf.Abs(rotationBody.localRotation.x - lastBodyRotation.x) * Mathf.Sign(Input.GetAxis("Vertical")) * 180;
+            totalYRotation += Mathf.Abs(rotationBody.localRotation.y - lastBodyRotation.y) * Mathf.Sign(Input.GetAxis("Horizontal")) * 180;
+        }
 
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isBoosting = true;
+        }
+        else
+        {
+            isBoosting = false;
+        }
+
         // Limit movement speed with counter-force; do NOT limit vertical speed or else car gravity gets screwed up
-        if (rb.velocity.magnitude > maxMovementSpeed)
+        if ((rb.velocity.magnitude > maxMovementSpeed && !isBoosting) || (rb.velocity.magnitude > boostedMovementSpeed && isBoosting))
         {
             rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z);
         }
@@ -123,7 +142,7 @@ public class MovementController : MonoBehaviour
         HandleNewInput();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if (groundCheck.GetComponent<GroundCheck>().isGrounded)
         {
@@ -131,6 +150,7 @@ public class MovementController : MonoBehaviour
         }
         else
         {
+            lastVelocity = rb.velocity;
             return false;
         }
     }
@@ -142,20 +162,26 @@ public class MovementController : MonoBehaviour
         controllerReverseAction = playerInput.actions["Reverse"];
     }
 
-
-    Vector2 keyboardSteerInput;
     void HandleNewInput()
     {
         // Read the Vector2 value from the Steer action
         Vector2 steerInput = steerAction.ReadValue<Vector2>();
 
         // Extract the horizontal component for steering
-        float horizontalInput = steerInput.x + keyboardSteerInput.x;
+        float horizontalInput = steerInput.x;
 
         // Apply rotation based on the horizontal input
-        transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        if (IsGrounded())
+        {
+            transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        }
+        else
+        {
+            rotationBody.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+        }
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();
+        //print("accelerateInput " + accelerateInput);
         float reverseInput = controllerReverseAction.ReadValue<float>();
 
         // Calculate forward and backward forces
@@ -163,18 +189,13 @@ public class MovementController : MonoBehaviour
         float backwardForce = reverseInput * controllerReverseSpeed;
 
         // Apply forces to the Rigidbody
-        rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
-
-        if (forwardForce > 0.1f)
+        if (IsGrounded())
         {
-            if (!SoundManager.Instance.isPlayingMotorSound)
-            { 
-                SoundManager.Instance.StartMotorSound();
-            }
+            rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
         }
         else
         {
-            SoundManager.Instance.StopMotorSound();
+            rb.velocity = lastVelocity;
         }
     }
 }

@@ -10,27 +10,34 @@ public class UIManager : MonoBehaviour
     public int currentScore;
 
     public Image boostFill;
-    public int maxSlider;
-    public int currentSlider;
+    public float currentAirAmount;
+    public float maxAirAmount = 100;
 
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         currentScore = 0;
+        currentAirAmount = maxAirAmount;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // DEBUG
         if (Input.GetKeyDown(KeyCode.B))
         {
-            AdjustSlider(0.1f);
+            AdjustSlider(10);
         }
 
         if(Input.GetKeyDown(KeyCode.N))
         {
-            AdjustSlider(-0.1f);
+            AdjustSlider(-10);
         }
     }
 
@@ -40,10 +47,10 @@ public class UIManager : MonoBehaviour
         scoreText.text = "Score: " + currentScore;
     }
 
-    public void AdjustSlider(float amountToAdd)
+    public void AdjustSlider(float amountOfAirToAdd)
     {
-        boostFill.fillAmount += amountToAdd;
-
+        currentAirAmount += amountOfAirToAdd;
+        boostFill.fillAmount = currentAirAmount / maxAirAmount;
     }
 
 }
