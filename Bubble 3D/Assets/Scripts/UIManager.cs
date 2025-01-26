@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public float currentAirAmount;
     public float maxAirAmount = 100;
 
+    public bool fuelDrained;
+    public bool fuelDraining;
+
 
     private void Awake()
     {
@@ -22,6 +25,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fuelDraining = true;
         currentScore = 0;
         currentAirAmount = maxAirAmount;
     }
@@ -41,6 +45,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if(!fuelDrained && fuelDraining)
+        {
+            AdjustSlider(-0.05f);
+        }
+    }
+
+    public IEnumerator PauseFuelDrain()
+    {
+        fuelDraining = false;
+        yield return new WaitForSeconds(3);
+        fuelDraining = true;
+    }
+
     public void AddScore(int points)
     {
         currentScore += points;
@@ -51,6 +70,15 @@ public class UIManager : MonoBehaviour
     {
         currentAirAmount += amountOfAirToAdd;
         boostFill.fillAmount = currentAirAmount / maxAirAmount;
+        if (boostFill.fillAmount <= 0)
+        {
+            boostFill.fillAmount = 0;
+            currentAirAmount = 0;
+            fuelDrained = true;
+        }
+        else
+        {
+            fuelDrained = false;
+        }
     }
-
 }

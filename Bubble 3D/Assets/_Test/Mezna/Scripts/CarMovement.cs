@@ -16,13 +16,9 @@ public class MovementController : MonoBehaviour
     public float movementSpeed = 100;
     public float boostedMovementSpeed = 115;
     public float maxMovementSpeed = 30;
-    public float currentSpeed;
     public float rotationSpeed = 3;
     public float jumpForce = 15;
     public float carGravity = 30;
-
-    public float currentAirAmount;
-    public float maxAirAmount = 100;
 
     public float totalXRotation;
     public float totalYRotation;
@@ -96,8 +92,6 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentAirAmount -= 0.1f;
-        FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
 
         // Rotate car based on horizontal input (and current velocity while grounded)
         if (IsGrounded())
@@ -118,9 +112,11 @@ public class MovementController : MonoBehaviour
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        // Boost while holding shift, but only if your fuel isn't empty
+        if (Input.GetKey(KeyCode.LeftShift) && !FindObjectOfType<UIManager>().fuelDrained)
         {
             isBoosting = true;
+            FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
         }
         else
         {

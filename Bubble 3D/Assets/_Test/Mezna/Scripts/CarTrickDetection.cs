@@ -35,66 +35,113 @@ public class CarTrickDetection : MonoBehaviour
             if (totalXRotation >= 300 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Frontflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(35f);
+                FindObjectOfType<UIManager>().AddScore(30);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation <= -300 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Backflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(35f);
+                FindObjectOfType<UIManager>().AddScore(45);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (Mathf.Abs(totalYRotation) >= 300 && Mathf.Abs(totalXRotation) < 240)
             {
                 print("Trick determined as: Sideflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(35f);
+                FindObjectOfType<UIManager>().AddScore(30);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation >= 180 && totalXRotation < 300 && Mathf.Abs(totalYRotation) >= 180 && Mathf.Abs(totalYRotation) < 300)
             {
                 print("Trick determined as: Front Diagonal Flip!");
+                FindObjectOfType<UIManager>().AdjustSlider(15f);
+                FindObjectOfType<UIManager>().AddScore(5);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation <= -180 && totalXRotation > -300 && Mathf.Abs(totalYRotation) >= 180 && Mathf.Abs(totalYRotation) < 300)
             {
                 print("Trick determined as: Back Diagonal Flip!");
+                FindObjectOfType<UIManager>().AdjustSlider(15f);
+                FindObjectOfType<UIManager>().AddScore(5);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
 
             // Doubles
             if (totalXRotation >= 660 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Double Frontflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(50f);
+                FindObjectOfType<UIManager>().AddScore(60);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
+
             }
             if (totalXRotation <= -660 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Double Backflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(50f);
+                FindObjectOfType<UIManager>().AddScore(75);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (Mathf.Abs(totalYRotation) >= 660 && Mathf.Abs(totalXRotation) < 240)
             {
                 print("Trick determined as: Double Sideflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(50f);
+                FindObjectOfType<UIManager>().AddScore(60);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation >= 450 && totalXRotation < 600 && Mathf.Abs(totalYRotation) >= 450 && Mathf.Abs(totalYRotation) < 600)
             {
                 print("Trick determined as: Double Front Diagonal Flip!");
+                FindObjectOfType<UIManager>().AdjustSlider(40f);
+                FindObjectOfType<UIManager>().AddScore(15);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
+
             }
             if (totalXRotation <= -450 && totalXRotation > -600 && Mathf.Abs(totalYRotation) >= 450 && Mathf.Abs(totalYRotation) < 600)
             {
                 print("Trick determined as: Double Back Diagonal Flip!");
+                FindObjectOfType<UIManager>().AdjustSlider(40f);
+                FindObjectOfType<UIManager>().AddScore(15);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
 
             // Triples and beyond aka "Masters"
             if (totalXRotation >= 1020 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Master Frontflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(100f);
+                FindObjectOfType<UIManager>().AddScore(75);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation <= -1020 && Mathf.Abs(totalYRotation) < 180)
             {
                 print("Trick determined as: Master Backflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(100f);
+                FindObjectOfType<UIManager>().AddScore(100);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (Mathf.Abs(totalYRotation) >= 1020 && Mathf.Abs(totalXRotation) < 240)
             {
                 print("Trick determined as: Master Sideflip!");
+                FindObjectOfType<UIManager>().AdjustSlider(100f);
+                FindObjectOfType<UIManager>().AddScore(75);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation >= 720 && totalXRotation < 1020 && Mathf.Abs(totalYRotation) >= 720 && Mathf.Abs(totalYRotation) < 1020)
             {
                 print("Trick determined as: Master Front Diagonal Flip!");
+                FindObjectOfType<UIManager>().AdjustSlider(100f);
+                FindObjectOfType<UIManager>().AddScore(50);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
             if (totalXRotation <= -720 && totalXRotation > -1020 && Mathf.Abs(totalYRotation) >= 720 && Mathf.Abs(totalYRotation) < 1020)
             {
                 print("Trick determined as: Master Back Diagonal Flip!");
+                FindObjectOfType<UIManager>().AdjustSlider(100f);
+                FindObjectOfType<UIManager>().AddScore(50);
+                FindObjectOfType<UIManager>().PauseFuelDrain();
             }
 
 
