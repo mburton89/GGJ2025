@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 698451a8eaab7984fb423cd36727bf67
+guid: f06af1cee429a0242a0d245a4237eb4c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Bowl
-    second: {fileID: 2100000, guid: 62deeca24137a984ca75b135de8620cd, type: 2}
+    second: {fileID: 2100000, guid: 64f3e7c8ed2d00b49b02da51a7a7ee85, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +40,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 300
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -95,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 3
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

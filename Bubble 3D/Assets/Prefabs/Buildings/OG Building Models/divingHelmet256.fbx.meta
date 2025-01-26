@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ad269487cfe24d94aaf3a11cfe0e98dc
+guid: 6405e28ebbe7edc4f82ac0253d678ff4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: barrel body
-    second: {fileID: 2100000, guid: 8c3a3ead2ff87ae429be1c2a5e6ee350, type: 2}
+      name: diving helmet main
+    second: {fileID: 2100000, guid: 116ee09da24762c45a5f04d4a29dc6d9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: barrel trim
-    second: {fileID: 2100000, guid: 60c97410bba2d5a4ab44346067b03184, type: 2}
+      name: helmet glass
+    second: {fileID: 2100000, guid: 544c918924257e348af003cd8cbfa2c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: helmet trim
+    second: {fileID: 2100000, guid: 418225566daff6646a03a9f5acd194b7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -45,7 +50,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 5
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -100,7 +105,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.049999997
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e2773bdabea1e6c488529401c81e11b5
+guid: ad269487cfe24d94aaf3a11cfe0e98dc
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface1
-    second: {fileID: 2100000, guid: 79e31ffcdc81ab74cab1bfb2cb64d64f, type: 2}
+      name: barrel body
+    second: {fileID: 2100000, guid: 8c3a3ead2ff87ae429be1c2a5e6ee350, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface2
-    second: {fileID: 2100000, guid: acd9baff226c1bf41bd04014f94ee2cf, type: 2}
+      name: barrel trim
+    second: {fileID: 2100000, guid: 60c97410bba2d5a4ab44346067b03184, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -45,7 +45,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 3
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -100,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.03
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
