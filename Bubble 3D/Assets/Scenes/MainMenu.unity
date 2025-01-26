@@ -449,6 +449,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 0}
   currentScore: 0
+  startButton: {fileID: 913556846}
+  quitButton: {fileID: 1770851516}
 --- !u!1 &810659667
 GameObject:
   m_ObjectHideFlags: 0
