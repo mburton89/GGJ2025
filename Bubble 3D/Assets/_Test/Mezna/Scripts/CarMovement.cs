@@ -21,10 +21,12 @@ public class MovementController : MonoBehaviour
     public float carGravity = 30;
 
     private Vector3 movementVelocity = Vector3.zero;
+    private Vector3 lastVelocity;
 
     public Transform groundCheck;
+    public Transform rotationBody;
     private Rigidbody rb;
-    private Transform cameraTransform;
+    public Transform cameraTransform;
 
     private PlayerInput playerInput;
     private Throwing throwing;
@@ -58,7 +60,7 @@ public class MovementController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        if (playerInput.actions["Jump"].triggered)
+        if (playerInput.actions["Jump"].triggered && IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -82,19 +84,15 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Add force to accelerate car; go slower if moving backwards
-        //rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
-        /*if (Mathf.Sign(Input.GetAxis("Vertical")) == 1)
+        // Rotate car based on horizontal input (and current velocity while grounded)
+        if (IsGrounded())
         {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
         }
-        else if (Mathf.Sign(Input.GetAxis("Vertical")) == -1)
+        else
         {
-            rb.AddForce(transform.rotation * new Vector3(0, 0, Input.GetAxis("Vertical")) * movementSpeed / 2);
-        }*/
-
-        // Rotate car based on horizontal input and current velocity
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            rotationBody.transform.rotation *= Quaternion.Euler(Input.GetAxis("Vertical") * rotationSpeed * 60 * Time.fixedDeltaTime, Input.GetAxis("Horizontal") * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+        }
 
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
@@ -108,7 +106,7 @@ public class MovementController : MonoBehaviour
         HandleNewInput();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if (groundCheck.GetComponent<GroundCheck>().isGrounded)
         {
@@ -116,6 +114,7 @@ public class MovementController : MonoBehaviour
         }
         else
         {
+            lastVelocity = rb.velocity;
             return false;
         }
     }
@@ -136,10 +135,17 @@ public class MovementController : MonoBehaviour
         float horizontalInput = steerInput.x;
 
         // Apply rotation based on the horizontal input
-        transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        if (IsGrounded())
+        {
+            transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+        }
+        else
+        {
+            rotationBody.transform.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+        }
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();
-        print("accelerateInput " + accelerateInput);
+        //print("accelerateInput " + accelerateInput);
         float reverseInput = controllerReverseAction.ReadValue<float>();
 
         // Calculate forward and backward forces
@@ -147,6 +153,13 @@ public class MovementController : MonoBehaviour
         float backwardForce = reverseInput * controllerReverseSpeed;
 
         // Apply forces to the Rigidbody
-        rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
+        if (IsGrounded())
+        {
+            rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
+        }
+        else
+        {
+            rb.velocity = lastVelocity;
+        }
     }
 }
