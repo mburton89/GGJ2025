@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 /* stuff 2 do:
  - make car bounce back when running into walls
  - make car more "weighted" like a car (allow x-rotation to tilt forward and stuff)
- - make car rotate freely instead of accelerating while in the air
 */
 
 public class MovementController : MonoBehaviour
@@ -19,6 +18,9 @@ public class MovementController : MonoBehaviour
     public float rotationSpeed = 3;
     public float jumpForce = 15;
     public float carGravity = 30;
+
+    public float totalXRotation;
+    public float totalYRotation;
 
     private Vector3 movementVelocity = Vector3.zero;
     private Vector3 lastVelocity;
@@ -91,7 +93,13 @@ public class MovementController : MonoBehaviour
         }
         else
         {
-            rotationBody.transform.rotation *= Quaternion.Euler(Input.GetAxis("Vertical") * rotationSpeed * 60 * Time.fixedDeltaTime, Input.GetAxis("Horizontal") * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+            Quaternion lastBodyRotation = rotationBody.localRotation;
+
+            rotationBody.rotation *= Quaternion.Euler(Input.GetAxis("Vertical") * rotationSpeed * 60 * Time.fixedDeltaTime, Input.GetAxis("Horizontal") * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+
+            // Calculate rotation for tricks; multiplying by 180 as a cheap method to get "accurate" calculation
+            totalXRotation += Mathf.Abs(rotationBody.localRotation.x - lastBodyRotation.x) * Mathf.Sign(Input.GetAxis("Vertical")) * 180;
+            totalYRotation += Mathf.Abs(rotationBody.localRotation.y - lastBodyRotation.y) * Mathf.Sign(Input.GetAxis("Horizontal")) * 180;
         }
 
         // Add extra gravity force to car
@@ -141,7 +149,7 @@ public class MovementController : MonoBehaviour
         }
         else
         {
-            rotationBody.transform.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
+            rotationBody.rotation *= Quaternion.Euler(steerInput.y * rotationSpeed * 60 * Time.fixedDeltaTime, horizontalInput * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
         }
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();

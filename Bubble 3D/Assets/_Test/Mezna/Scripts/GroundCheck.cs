@@ -10,7 +10,11 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        transform.parent.localRotation = Quaternion.Euler(0, cameraTransform.rotation.y, 0);
+        // localRotation does what i want it to, so it's what i'm using
+        transform.parent.localRotation = Quaternion.Euler(0, transform.parent.localRotation.y, 0);
+
+        // Check for trick upon landing
+        GetComponentInParent<CarTrickDetection>().DetermineTrick();
     }
 
     private void OnTriggerStay(Collider other)
