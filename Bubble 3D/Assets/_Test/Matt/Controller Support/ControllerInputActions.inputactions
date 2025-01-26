@@ -114,9 +114,36 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MoveKeyboard",
+                    "name": "MoveW",
                     "type": "Button",
                     "id": "ba0bcff5-cd75-4b8e-ad07-4615d89a4c3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveA",
+                    "type": "Button",
+                    "id": "75dfd566-5e48-4caa-bca8-9eb94508da9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveS",
+                    "type": "Button",
+                    "id": "05f0b7b0-ad0d-492d-b3ee-80088259a1e4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveD",
+                    "type": "Button",
+                    "id": "1420d063-4601-41f4-8cdf-4766f4a98c97",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -384,40 +411,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveKeyboard",
+                    "action": "MoveW",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "33e74d9d-c66a-49da-9ce1-35177bfc2668",
+                    "id": "b3b9ec57-bdbd-4085-81d2-2196ad385918",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveKeyboard",
+                    "action": "MoveA",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "515f5a8a-311f-40f2-a55c-319813b8876e",
+                    "id": "582970c5-5790-48ee-bc29-c525ba0199f3",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveKeyboard",
+                    "action": "MoveS",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "116d9228-938a-4afd-9589-3600102e0234",
+                    "id": "d1108cea-0b42-4513-ae9b-a6acc4a0414c",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveKeyboard",
+                    "action": "MoveD",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

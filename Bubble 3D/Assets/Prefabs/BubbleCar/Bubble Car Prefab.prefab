@@ -894,11 +894,11 @@ MonoBehaviour:
     type: 3}
   moveUpAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
     type: 3}
-  moveDownAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+  moveDownAction: {fileID: -5592820103887491235, guid: 90c25abee675f7349b9d80a6c3868646,
     type: 3}
-  moveLeftAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+  moveLeftAction: {fileID: 3228926132337649300, guid: 90c25abee675f7349b9d80a6c3868646,
     type: 3}
-  moveRightAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+  moveRightAction: {fileID: -5190451292616077691, guid: 90c25abee675f7349b9d80a6c3868646,
     type: 3}
 --- !u!114 &287107266995217936
 MonoBehaviour:

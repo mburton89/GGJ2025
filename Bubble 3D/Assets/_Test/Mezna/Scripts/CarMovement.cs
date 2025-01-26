@@ -48,6 +48,7 @@ public class MovementController : MonoBehaviour
     private InputAction controllerAccelerateAction;
     private InputAction controllerReverseAction;
     Vector2 keyboardSteerInput;
+    Vector2 keyboardRotateInput;
 
     public InputActionReference moveStickAction; // Reference to the horizontal input
 
@@ -159,6 +160,9 @@ public class MovementController : MonoBehaviour
 
             if (moveLeftAction.action.IsPressed()) horizontalInput -= 1f;
             if (moveRightAction.action.IsPressed()) horizontalInput += 1f;
+
+            print("verticalInput: " + verticalInput);
+            print("horizontalInput: " + horizontalInput);
 
             // Calculate cumulative rotations.
             totalXRotation += Mathf.Abs(rotationBody.localRotation.eulerAngles.x - lastBodyRotation.x) * Mathf.Sign(verticalInput) * 180;
