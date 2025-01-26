@@ -47,6 +47,15 @@ public class MovementController : MonoBehaviour
 
     private InputAction controllerAccelerateAction;
     private InputAction controllerReverseAction;
+    Vector2 keyboardSteerInput;
+
+    public InputActionReference moveStickAction; // Reference to the horizontal input
+
+    public InputActionReference moveUpAction;    // Reference to W input.
+    public InputActionReference moveDownAction;  // Reference to S input.
+    public InputActionReference moveLeftAction;  // Reference to A input.
+    public InputActionReference moveRightAction; // Reference to D input.
+
 
     private void Awake()
     {
@@ -66,18 +75,24 @@ public class MovementController : MonoBehaviour
     private void Start()
     {
         GetNewInputActions();
+        moveStickAction.action.Enable();
+        moveUpAction.action.Enable();
+        moveDownAction.action.Enable();
+        moveLeftAction.action.Enable();
+        moveRightAction.action.Enable();
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        //if (Input.GetButtonDown("Jump") && IsGrounded())
+        //{
+        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //}
 
         if (playerInput.actions["Jump"].triggered && IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            SoundManager.Instance.PlayJumpSound();
         }
 
         if (playerInput.actions["ThrowLeft"].triggered)
@@ -95,6 +110,20 @@ public class MovementController : MonoBehaviour
             throwing.ThrowForward();
         }
 
+        if (playerInput.actions["SteerLeft"].IsPressed())
+        {
+            //transform.rotation *= Quaternion.Euler(0, -1 * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            keyboardSteerInput = new Vector2(-1, 0);
+        }
+        else if (playerInput.actions["SteerRight"].IsPressed())
+        {
+            //transform.rotation *= Quaternion.Euler(0, 1 * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            keyboardSteerInput = new Vector2(1, 0);
+        }
+        else
+        {
+            keyboardSteerInput = new Vector2(0, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -108,17 +137,34 @@ public class MovementController : MonoBehaviour
         // Rotate car based on horizontal input (and current velocity while grounded)
         if (IsGrounded())
         {
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
+            //transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
         }
         else
         {
+            //Quaternion lastBodyRotation = rotationBody.localRotation;
+            //totalXRotation += Mathf.Abs(rotationBody.localRotation.x - lastBodyRotation.x) * Mathf.Sign(Input.GetAxis("Vertical")) * 180;
+            //totalYRotation += Mathf.Abs(rotationBody.localRotation.y - lastBodyRotation.y) * Mathf.Sign(Input.GetAxis("Horizontal")) * 180;
+
             Quaternion lastBodyRotation = rotationBody.localRotation;
 
-            rotationBody.rotation *= Quaternion.Euler(Input.GetAxis("Vertical") * rotationSpeed * 60 * Time.fixedDeltaTime, Input.GetAxis("Horizontal") * rotationSpeed * 60 * Time.fixedDeltaTime, 0);
 
-            // Calculate rotation for tricks; multiplying by 180 as a cheap method to get "accurate" calculation
-            totalXRotation += Mathf.Abs(rotationBody.localRotation.x - lastBodyRotation.x) * Mathf.Sign(Input.GetAxis("Vertical")) * 180;
-            totalYRotation += Mathf.Abs(rotationBody.localRotation.y - lastBodyRotation.y) * Mathf.Sign(Input.GetAxis("Horizontal")) * 180;
+            Vector2 stickInput = moveStickAction.action.ReadValue<Vector2>();
+
+            // Extract vertical (Y) and horizontal (X) inputs.
+            float verticalInput = stickInput.y;
+            float horizontalInput = stickInput.x;
+
+            if (moveUpAction.action.IsPressed()) verticalInput += 1f;
+            if (moveDownAction.action.IsPressed()) verticalInput -= 1f;
+
+            if (moveLeftAction.action.IsPressed()) horizontalInput -= 1f;
+            if (moveRightAction.action.IsPressed()) horizontalInput += 1f;
+
+            // Calculate cumulative rotations.
+            totalXRotation += Mathf.Abs(rotationBody.localRotation.eulerAngles.x - lastBodyRotation.x) * Mathf.Sign(verticalInput) * 180;
+            totalYRotation += Mathf.Abs(rotationBody.localRotation.eulerAngles.y - lastBodyRotation.y) * Mathf.Sign(horizontalInput) * 180;
+
+            // Update the last rotation for the next frame.
         }
 
         // Add extra gravity force to car
@@ -168,7 +214,7 @@ public class MovementController : MonoBehaviour
         Vector2 steerInput = steerAction.ReadValue<Vector2>();
 
         // Extract the horizontal component for steering
-        float horizontalInput = steerInput.x;
+        float horizontalInput = steerInput.x + keyboardSteerInput.x;
 
         // Apply rotation based on the horizontal input
         if (IsGrounded())
@@ -196,6 +242,18 @@ public class MovementController : MonoBehaviour
         else
         {
             rb.velocity = lastVelocity;
+        }
+
+        if (forwardForce > 0.1f)
+        {
+            if (!SoundManager.Instance.isPlayingMotorSound)
+            {
+                SoundManager.Instance.StartMotorSound();
+            }
+        }
+        else
+        {
+            SoundManager.Instance.StopMotorSound();
         }
     }
 }

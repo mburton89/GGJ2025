@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5380652556266283214}
   - component: {fileID: 4935481669113350326}
   - component: {fileID: 6313464038517260026}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: polySurface4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1088785739378526997}
   - component: {fileID: 1375750090132973181}
   - component: {fileID: 1171648005622285593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 126949377013349727}
   - component: {fileID: 6146879128376162502}
   - component: {fileID: 8456409659127694518}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 8644911259758040577}
   - component: {fileID: 8193694874960952918}
   - component: {fileID: 1374637824024554156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: polySurface3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 1182774524850757443}
   - component: {fileID: 2720777047514466810}
   - component: {fileID: 8570802338042619018}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rotation Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6252251896145864236}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Car Mesh Objects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -704,7 +704,7 @@ GameObject:
   - component: {fileID: 3416235256648023716}
   - component: {fileID: 1713093918346854146}
   - component: {fileID: 5569952659108183037}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +790,7 @@ GameObject:
   - component: {fileID: 6236671789024024127}
   - component: {fileID: 287107266995217936}
   - component: {fileID: 8917734041453337973}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,12 +874,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cba211a70dff924bbe578400dde6d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 100
-  boostedMovementSpeed: 115
-  maxMovementSpeed: 15
+  movementSpeed: 1
+  boostedMovementSpeed: 246.2
+  maxMovementSpeed: 30
   currentSpeed: 0
-  rotationSpeed: 3
-  jumpForce: 15
+  rotationSpeed: 8
+  jumpForce: 31
   carGravity: 30
   currentAirAmount: 0
   maxAirAmount: 100
@@ -888,8 +888,18 @@ MonoBehaviour:
   groundCheck: {fileID: 1285434489755048735}
   rotationBody: {fileID: 1182774524850757443}
   cameraTransform: {fileID: 1974282387180929455}
-  controllerAccelerationSpeed: 10
-  controllerReverseSpeed: 5
+  controllerAccelerationSpeed: 5
+  controllerReverseSpeed: 3
+  moveStickAction: {fileID: -3479015285994238606, guid: 90c25abee675f7349b9d80a6c3868646,
+    type: 3}
+  moveUpAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+    type: 3}
+  moveDownAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+    type: 3}
+  moveLeftAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+    type: 3}
+  moveRightAction: {fileID: 2913734936281641868, guid: 90c25abee675f7349b9d80a6c3868646,
+    type: 3}
 --- !u!114 &287107266995217936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,7 +996,7 @@ GameObject:
   - component: {fileID: 3034026955291565351}
   - component: {fileID: 4636105553868524140}
   - component: {fileID: 6151399680046523075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: polySurface5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1136,10 +1146,50 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -3957782524123411102, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3441741364759053172, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2797864980895152918, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2377678898046858952, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2240151287705473546, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -412989040442181847, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 26c4da23ed909b546a3584cd508d606a,
         type: 3}
       propertyPath: m_Name
       value: GOLDFISH_ANIMATIONS
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140668533725440856, guid: 26c4da23ed909b546a3584cd508d606a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -3810173112157226654, guid: 26c4da23ed909b546a3584cd508d606a, type: 3}
