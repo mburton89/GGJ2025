@@ -57,7 +57,7 @@ public class Newspaper : MonoBehaviour
             {
                 FindObjectOfType<UIManager>().AddScore(directHitScore);
                 hasHitTarget = true;
-                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!\n+ " + GameTimer.Instance.timeToAdd + "seconds");
+                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!\n+ " + GameTimer.Instance.timeToAdd + " seconds");
                 SoundManager.Instance.PlayDirectHitSound();
                 GameTimer.Instance.AddTime();
                 collision.gameObject.GetComponent<Target>().HandleHit();
@@ -84,7 +84,7 @@ public class Newspaper : MonoBehaviour
             }
 
             FindObjectOfType<UIManager>().AddScore(throwScore);
-            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!\n+ " + GameTimer.Instance.timeToAdd + "seconds");
+            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!\n+ " + GameTimer.Instance.timeToAdd + " seconds");
             SoundManager.Instance.PlayScorePointSound();
             GameTimer.Instance.AddTime();
             other.gameObject.GetComponent<Target>().HandleHit();

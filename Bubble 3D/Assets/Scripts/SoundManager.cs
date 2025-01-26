@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource scorePoint;
     [SerializeField] AudioSource directHit;
     [SerializeField] AudioSource punch;
+    [SerializeField] AudioSource jump;
 
     public AudioSource motorSound;
     public float startingMotorVolume;
@@ -50,6 +51,18 @@ public class SoundManager : MonoBehaviour
                 motorSound.pitch += motorSoundIncreaseSpeed;
             }
         }
+        else 
+        {
+            if (motorSound.volume > startingMotorVolume)
+            {
+                motorSound.volume -= motorSoundIncreaseSpeed * 2;
+            }
+
+            if (motorSound.pitch > startingMotorPitch)
+            {
+                motorSound.pitch -= motorSoundIncreaseSpeed * 2;
+            }
+        }
     }
 
     void PlaySound(AudioSource soundToPlay)
@@ -73,6 +86,11 @@ public class SoundManager : MonoBehaviour
         PlaySound(punch);
     }
 
+    public void PlayJumpSound()
+    {
+        PlaySound(jump);
+    }
+
     public void StartMotorSound()
     {
         print("StartMotorSound");
@@ -83,10 +101,6 @@ public class SoundManager : MonoBehaviour
 
     public void StopMotorSound()
     {
-        motorSound.Stop();
-        motorSound.enabled = false;
         isPlayingMotorSound = false;
-        motorSound.volume = startingMotorVolume;
-        motorSound.pitch = startingMotorPitch;
     }
 }
