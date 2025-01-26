@@ -77,7 +77,6 @@ public class MovementController : MonoBehaviour
         {
             throwing.ThrowForward();
         }
-
     }
 
     private void FixedUpdate()
@@ -139,7 +138,6 @@ public class MovementController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0, horizontalInput * rotationSpeed * rb.velocity.magnitude * Time.fixedDeltaTime, 0);
 
         float accelerateInput = controllerAccelerateAction.ReadValue<float>();
-        print("accelerateInput " + accelerateInput);
         float reverseInput = controllerReverseAction.ReadValue<float>();
 
         // Calculate forward and backward forces
@@ -148,5 +146,17 @@ public class MovementController : MonoBehaviour
 
         // Apply forces to the Rigidbody
         rb.AddForce(transform.forward * (forwardForce - backwardForce) * maxMovementSpeed, ForceMode.Acceleration);
+
+        if (forwardForce > 0.1f)
+        {
+            if (!SoundManager.Instance.isPlayingMotorSound)
+            { 
+                SoundManager.Instance.StartMotorSound();
+            }
+        }
+        else
+        {
+            SoundManager.Instance.StopMotorSound();
+        }
     }
 }
