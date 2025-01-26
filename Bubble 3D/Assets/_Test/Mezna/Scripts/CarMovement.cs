@@ -57,7 +57,10 @@ public class MovementController : MonoBehaviour
         throwing = GetComponent<Throwing>();
 
         // Start with half of the air/boost meter filled
-        FindObjectOfType<UIManager>().AdjustSlider(0.5f);
+        if (FindObjectOfType<UIManager>() != null)
+        {
+            FindObjectOfType<UIManager>().AdjustSlider(0.5f);
+        }
     }
 
     private void Start()
@@ -97,7 +100,10 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         currentAirAmount -= 0.1f;
-        FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
+        if (FindObjectOfType<UIManager>() != null)
+        {
+            FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
+        }
 
         // Rotate car based on horizontal input (and current velocity while grounded)
         if (IsGrounded())

@@ -509,6 +509,8 @@ MonoBehaviour:
   rotationSpeed: 3
   jumpForce: 15
   carGravity: 30
+  currentAirAmount: 0
+  maxAirAmount: 100
   totalXRotation: 0
   totalYRotation: 0
   groundCheck: {fileID: 1580368197818193623}
@@ -614,7 +616,7 @@ GameObject:
   - component: {fileID: 3408865970381086889}
   - component: {fileID: 5937659293320943846}
   - component: {fileID: 6190605001267560015}
-  - component: {fileID: 7575232526328918578}
+  - component: {fileID: 4200284621920997401}
   - component: {fileID: 6977692174978856365}
   m_Layer: 7
   m_Name: Rotation Body
@@ -691,7 +693,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7575232526328918578
+--- !u!135 &4200284621920997401
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
