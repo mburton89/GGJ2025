@@ -49,6 +49,11 @@ public class Throwing : MonoBehaviour
         StartCoroutine(ThrowWithDelay(rightDirection));
     }
 
+    public void ThrowForward()
+    {
+        StartCoroutine(ThrowWithDelay(transform.forward));
+    }
+
     IEnumerator ThrowWithDelay(Vector3 direction)
     {
         canThrow = false;
@@ -64,14 +69,24 @@ public class Throwing : MonoBehaviour
             yield break;
         }
 
-        rb.velocity = Vector3.zero;
+        if (GetComponent<CharacterController>())
+        { 
+            rb.velocity = GetComponent<CharacterController>().velocity;
+        }
+        else if (GetComponent<Rigidbody>())
+        {
+            rb.velocity = GetComponent<Rigidbody>().velocity;
+        }
+
         Vector3 throwDirection = direction.normalized * throwingForce;
 
         // Calculate throw direction relative to the character's facing direction
         Vector3 relativeThrowDirection = transform.TransformDirection(new Vector3(throwDirection.x, 0, throwDirection.z));
+        //Vector3 relativeThrowDirection = transform.forward * throwingForce;
 
         // Add upward velocity to the throw direction
         Vector3 newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
+        //Vector3 newThrowDirection = new Vector3(relativeThrowDirection.x, upwardVelocity, relativeThrowDirection.z);
 
         rb.AddForce(newThrowDirection, ForceMode.Impulse);
         //rb.AddTorque(new Vector3(newspaperTorqueX, newspaperTorqueY, newspaperTorqueZ));

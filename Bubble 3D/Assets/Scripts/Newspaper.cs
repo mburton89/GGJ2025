@@ -30,6 +30,7 @@ public class Newspaper : MonoBehaviour
         maxHitDistance = 5f;
         throwScore = 0;
         //targetCollider = gameObject.CompareTag("Target").gameObject.GetComponent<Collider>();
+        GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
     }
 
     // Update is called once per frame
@@ -44,26 +45,33 @@ public class Newspaper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target"))
+        print("collision.gameObject.name: " + collision.gameObject.name + " Tag: " + collision.gameObject.tag);
+
+        if (collision.gameObject.GetComponent<Target>())
         {
             SoundManager.Instance.PlayPunchSound();
+            collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
 
             if (!collision.gameObject.GetComponent<Target>().hasBeenHit)
             {
-                collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                 FindObjectOfType<UIManager>().AddScore(directHitScore);
                 hasHitTarget = true;
-                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!");
-                collision.gameObject.GetComponent<Rigidbody>().AddForce((collision.transform.position - transform.position) * hitForce);
+                PopupTextManager.instance.ShowPopupText(collision.gameObject.transform, "Direct Hit!\n" + directHitScore + " points!\n" + GameTimer.Instance.timeToAdd + "seconds");
                 SoundManager.Instance.PlayDirectHitSound();
+                GameTimer.Instance.AddTime();
                 collision.gameObject.GetComponent<Target>().HandleHit();
             }
         }
+
+        GetComponent<AudioSource>().Stop();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Area Target") && !other.gameObject.GetComponent<Target>().hasBeenHit)
+        print("other.gameObject.name: " + other.gameObject.name + " Tag: " + other.gameObject.tag); 
+
+        if (other.gameObject.GetComponent<Target>() && !other.gameObject.GetComponent<Target>().hasBeenHit)
         {
             float hitDistance = Vector3.Distance(other.gameObject.transform.position, transform.position);
             print("Area Target Hit Distance: " + hitDistance);
@@ -75,10 +83,13 @@ public class Newspaper : MonoBehaviour
             }
 
             FindObjectOfType<UIManager>().AddScore(throwScore);
-            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!");
+            PopupTextManager.instance.ShowPopupText(other.gameObject.transform, throwScore + " points!\n" + GameTimer.Instance.timeToAdd + "seconds");
             SoundManager.Instance.PlayScorePointSound();
+            GameTimer.Instance.AddTime();
             other.gameObject.GetComponent<Target>().HandleHit();
         }
+
+        GetComponent<AudioSource>().Stop();
     }
 
     int CalculateScore(float hitDistance)
