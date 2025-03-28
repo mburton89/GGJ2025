@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81119c7206ad4741a1ea52ec5e2cfd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newsPaperPrefab: {fileID: 8881841543153812110, guid: fd1abdbcbae0f2e41adc37dde268e89a,
+  newsPaperPrefab: {fileID: 7655262261436103180, guid: 70d64a89ab5824e4ca8c8a40c2434111,
     type: 3}
   spawnpoint: {fileID: 8470553303924870952}
   throwingForce: 45
