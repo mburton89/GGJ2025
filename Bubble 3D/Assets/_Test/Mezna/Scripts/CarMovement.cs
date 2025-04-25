@@ -13,8 +13,8 @@ using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
-    public float movementSpeed = 100;
-    public float boostedMovementSpeed = 115;
+    public float movementSpeed = 20;
+    public float boostedMovementSpeed = 300;
     public float maxMovementSpeed = 30;
     public float currentSpeed;
     public float rotationSpeed = 3;
@@ -129,11 +129,13 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentAirAmount -= 0.1f;
+
+        //Manages air ammount
+       /* currentAirAmount -= 0.1f;
         if (FindObjectOfType<UIManager>() != null)
         {
             FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
-        }
+        }*/
 
         // Rotate car based on horizontal input (and current velocity while grounded)
         if (IsGrounded())
@@ -178,19 +180,28 @@ public class MovementController : MonoBehaviour
         // Add extra gravity force to car
         rb.velocity -= new Vector3(0, carGravity * Time.deltaTime, 0);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && currentAirAmount != 0)
         {
             isBoosting = true;
+            Debug.Log("I am boosting");
+
+            if (FindObjectOfType<UIManager>() != null)
+            {
+                FindObjectOfType<UIManager>().AdjustSlider(-0.1f);
+            }
         }
         else
         {
             isBoosting = false;
+            currentAirAmount += 1f;
         }
 
         // Limit movement speed with counter-force; do NOT limit vertical speed or else car gravity gets screwed up
         if ((rb.velocity.magnitude > maxMovementSpeed && !isBoosting) || (rb.velocity.magnitude > boostedMovementSpeed && isBoosting))
         {
             rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z);
+            
+            
         }
 
         HandleNewInput();
